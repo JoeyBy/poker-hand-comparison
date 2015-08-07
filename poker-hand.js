@@ -10,53 +10,30 @@ $(document).ready(function(){
   $('#startGame').on('click', getCards);
 });
 
+function getHand (selector) {
+  return $(selector).map(function (index, input) {
+    return $(input).val().toUpperCase();
+  }).get().join('');
+}
+
 var hand1 = {
   score: 0,
-  getCardOne: function(){
-    return this.card1 = $('#oneOne').val().toUpperCase();
-  },
-  getCardTwo: function() {
-    return this.card2 = $('#oneTwo').val().toUpperCase();
-  },
-  getCardThree: function() {
-    return this.card3 = $('#oneThree').val().toUpperCase();
-  },
-  getCardFour: function() {
-    return this.card4 = $('#oneFour').val().toUpperCase();
-  },
-  getCardFive: function() {
-    return this.card5 = $('#oneFive').val().toUpperCase();
+  cards: function() {
+    return getHand('#handOne input')
   },
 };
 
 var hand2 = {
   score: 0,
-  getCardOne: function(){
-    return this.card1 = $('#twoOne').val().toUpperCase();
-  },
-  getCardTwo: function() {
-    return this.card2 = $('#twoTwo').val().toUpperCase();
-  },
-  getCardThree: function() {
-    return this.card3 = $('#twoThree').val().toUpperCase();
-  },
-  getCardFour: function() {
-    return this.card4 = $('#twoFour').val().toUpperCase();
-  },
-  getCardFive: function() {
-    return this.card5 = $('#twoFive').val().toUpperCase();
+  cards: function() {
+    return getHand('#handTwo input')
   },
 };
 
-var POKER = {
-
-}
-
 function getCards() {
   // assembles the 5 cards from each hand into a hand
-  var handOne = (hand1.getCardOne() + hand1.getCardTwo() + hand1.getCardThree() + hand1.getCardFour() + hand1.getCardFive());
-  var handTwo = (hand2.getCardOne() + hand2.getCardTwo() + hand2.getCardThree() + hand2.getCardFour() + hand2.getCardFive());
-
+  var handOne = hand1.cards()
+  var handTwo = hand2.cards()
   // sorts the elements of each hand into suits and face values. 
   var cardSort = function(hand) {
     var suit = []
