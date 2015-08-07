@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="poker-hand.css">
+  </head>
+  <body>
+  <h1>Joey's Poker Comparison</h1>
+    <table>
+      <td>
+       <form id="handOne">
+        <table>
+          <tr>
+            <td>Hand One:</td>
+            <td>
+              <input id="oneOne" type="text" name="oneOne" placeholder="KD, TH, AS, 4H, etc..)">
+              <input id="oneTwo" type="text" name="cardTwo" placeholder="KD, TH, AS, 4H, etc..)">
+              <input id="oneThree" type="text" name="cardThree" placeholder="KD, TH, AS, 4H, etc..)">
+              <input id="oneFour" type="text" name="cardFour" placeholder="KD, TH, AS, 4H, etc..)">
+              <input id="oneFive" type="text" name="cardFive" placeholder="KD, TH, AS, 4H, etc..)">
+            </td>
+          </tr>
+        </table>
+       </form>
+      </td>
+      <td>
+        <form id="handTwo">
+          <table>
+            <tr>
+              <td>Hand Two:</td>
+              <td>
+                <input id="twoOne" type="text" name="cardOne" placeholder="KD, TH, AS, 4H, etc..)">
+                <input id="twoTwo" type="text" name="cardTwo" placeholder="KD, TH, AS, 4H, etc..)">
+                <input id="twoThree" type="text" name="cardThree" placeholder="KD, TH, AS, 4H, etc..)">
+                <input id="twoFour" type="text" name="cardFour" placeholder="KD, TH, AS, 4H, etc..)">
+                <input id="twoFive" type="text" name="cardFive" placeholder="KD, TH, AS, 4H, etc..)">
+              </td>
+            </tr>
+          </table>
+        </form>
+      </td>
+      <td>
+        <input id="startGame" type="button" name="startGame" value="Compare"></input>
+      </td>
+
+      <div>
+        <span id="winner"></span>
+      </div>
+    </table>
+      <script type="text/javascript" src="poker-hand.js"></script>
+  </body>
+</html>
