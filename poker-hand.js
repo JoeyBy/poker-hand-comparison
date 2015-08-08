@@ -16,6 +16,7 @@ function getHand (selector) {
   }).get().join('');
 }
 
+// change this variable name to be more unique
 var hand1 = {
   score: 0,
   cards: function() {
@@ -44,6 +45,7 @@ function getCards() {
       return a - b;
     };
 
+
     for (var i=0; i < hand.length-1; i+= 2) {
       numbers.push(all[i]);
       // converts T, J, Q, K and A to integers.
@@ -52,6 +54,10 @@ function getCards() {
         numbers = numbers.map(function(item) {return (item == 'Q' ? 12 : item) })
         numbers = numbers.map(function(item) {return (item == 'K' ? 13 : item) })
         numbers = numbers.map(function(item) {return (item == 'A' ? 14 : item) })
+        // can use all conversion logic in single map function.
+        // can include the .map (Number) logic in the original map function. user parseInt(item) instead.
+
+
       // converts any remaining numbers into integers  
       numbers = numbers.map(Number);
       // sorts the array of integers from lowest to highest
