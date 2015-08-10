@@ -32,9 +32,9 @@ var secondHand = {
 };
 
 // checks to see if a flush is present
-function checkFlush(array) {
-  for(var i=0; i < array.length - 1; i++) {
-    if(array[i] != array[i+1]) {
+function checkFlush(handSuit) {
+  for(var i=0; i < handSuit.length - 1; i++) {
+    if(handSuit[i] != handSuit[i+1]) {
       return false;
     }
   }
@@ -42,27 +42,27 @@ function checkFlush(array) {
 }
 
 // checks to see if a straight is present
-function checkStraight(array) {
-  var index = array.indexOf()
-  for(var i=0; i<array.length - 1; i++) {
-    if (array[i+1] - array[i] != 1) {
+function checkStraight(handValue) {
+  var index = handValue.indexOf()
+  for(var i=0; i < handValue.length - 1; i++) {
+    if (handValue[i+1] - handValue[i] != 1) {
       return false;
     }
   }
   return true;
 }
 // checks to see if a flush is preset
-function checkIfRoyalFlush(array) {
-  if(array[array.length-1] == 14){
+function checkIfRoyalFlush(handValue) {
+  if(handValue[handValue.length-1] == 14){
     return true;
   } else {
     return false;
   };
 }
 // counts the similar elements in the persons hand (pairs, triples, full house)
-function countMatches(array) {
+function countMatches(handValue) {
   var counts = {};
-  array.forEach(function(x) {counts[x] = (counts[x] || 0)+1; });
+  handValue.forEach(function(x) {counts[x] = (counts[x] || 0)+1; });
   var pairCount = [];
   for (var key in counts) {
     pairCount.push(counts[key])
@@ -70,25 +70,25 @@ function countMatches(array) {
   return pairCount;
 }
 
-function checkFourKind(array) {
-  if (array.indexOf(4) > -1) {
+function checkFourKind(handValue) {
+  if (handValue.indexOf(4) > -1) {
     return true;
   }else{
     return false;
   };
 }
 
-function checkTriples(array) {
-  if ($.inArray(3, array) > -1 ){
+function checkTriples(handValue) {
+  if ($.inArray(3, handValue) > -1 ){
     return true;
   }else{
     return false;
   };
 }
 
-function checkTwoPair(array) {
+function checkTwoPair(handValue) {
   var pairCount = 0;
-  array.forEach(function(e) {
+  handValue.forEach(function(e) {
     if (e == 2){
       pairCount += 1
     };
@@ -98,8 +98,8 @@ function checkTwoPair(array) {
   };
 };
 
-function checkPair(array) {
-  if ($.inArray(2, array) > -1) {
+function checkPair(handValue) {
+  if ($.inArray(2, handValue) > -1) {
     return true;
   }else{
     return false;
@@ -139,7 +139,6 @@ function getCards() {
     };
     // returns an array of arrays of the players hand. [0] is the suit [1] is the face value
     return [suit, numbers]
-
   };
 
   var handOneSuit = (cardSort(firstHand.cards())[0])
