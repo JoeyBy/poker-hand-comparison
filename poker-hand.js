@@ -17,24 +17,99 @@ function getHand (selector) {
 }
 
 // change this variable name to be more unique
-var hand1 = {
+var firstHand = {
   score: 0,
   cards: function() {
     return getHand('#handOne input')
   },
 };
 
-var hand2 = {
+var secondHand = {
   score: 0,
   cards: function() {
     return getHand('#handTwo input')
   },
 };
 
+// checks to see if a flush is present
+function checkFlush(array) {
+  for(var i=0; i < array.length - 1; i++) {
+    if(array[i] != array[i+1]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// checks to see if a straight is present
+function checkStraight(array) {
+  var index = array.indexOf()
+  for(var i=0; i<array.length - 1; i++) {
+    if (array[i+1] - array[i] != 1) {
+      return false;
+    }
+  }
+  return true;
+}
+// checks to see if a flush is preset
+function checkIfRoyalFlush(array) {
+  if(array[array.length-1] == 14){
+    return true;
+  } else {
+    return false;
+  };
+}
+// counts the similar elements in the persons hand (pairs, triples, full house)
+function countMatches(array) {
+  var counts = {};
+  array.forEach(function(x) {counts[x] = (counts[x] || 0)+1; });
+  var pairCount = [];
+  for (var key in counts) {
+    pairCount.push(counts[key])
+  }
+  return pairCount;
+}
+
+function checkFourKind(array) {
+  if (array.indexOf(4) > -1) {
+    return true;
+  }else{
+    return false;
+  };
+}
+
+function checkTriples(array) {
+  if ($.inArray(3, array) > -1 ){
+    return true;
+  }else{
+    return false;
+  };
+}
+
+function checkTwoPair(array) {
+  var pairCount = 0;
+  array.forEach(function(e) {
+    if (e == 2){
+      pairCount += 1
+    };
+  });
+  if (pairCount == 2){
+    return true
+  };
+};
+
+function checkPair(array) {
+  if ($.inArray(2, array) > -1) {
+    return true;
+  }else{
+    return false;
+  };
+}
+
+function higherCard() {
+}
+
 function getCards() {
-  // assembles the 5 cards from each hand into a hand
-  var handOne = hand1.cards()
-  var handTwo = hand2.cards()
   // sorts the elements of each hand into suits and face values. 
   var cardSort = function(hand) {
     var suit = []
@@ -45,9 +120,8 @@ function getCards() {
       return a - b;
     };
 
-
     for (var i=0; i < hand.length-1; i+= 2) {
-      numbers.push(all[i]);
+      numbers.push(hand[i]);
       // converts T, J, Q, K and A to integers.
         numbers = numbers.map(function(item) {return (item == 'T' ? 10 : item) })
         numbers = numbers.map(function(item) {return (item == 'J' ? 11 : item) })
@@ -57,90 +131,27 @@ function getCards() {
         // can use all conversion logic in single map function.
         // can include the .map (Number) logic in the original map function. user parseInt(item) instead.
 
-
       // converts any remaining numbers into integers  
       numbers = numbers.map(Number);
       // sorts the array of integers from lowest to highest
       numbers.sort(compareNumbers);
-      all[i+1] && suit.push(all[i+1]);
+      hand[i+1] && suit.push(hand[i+1]);
     };
     // returns an array of arrays of the players hand. [0] is the suit [1] is the face value
     return [suit, numbers]
+
   };
 
-  var handOneSuit = (cardSort(handOne)[0])
-  var handOneValue = (cardSort(handOne)[1])
-  var handTwoSuit = (cardSort(handTwo)[0])
-  var handTwoValue = (cardSort(handTwo)[1])
+  var handOneSuit = (cardSort(firstHand.cards())[0])
+  var handOneValue = (cardSort(firstHand.cards())[1])
+  var handTwoSuit = (cardSort(secondHand.cards())[0])
+  var handTwoValue = (cardSort(secondHand.cards())[1])
 
   function inArray(array, value) {
     for (var i=0; i<array.length; i++) {
       if(array[i] == value) return true;
     };
     return false;
-  }
-
-  // checks to see if a flush is present
-  var checkFlush = function(array) {
-    for(var i=0; i < array.length - 1; i++) {
-      if(array[i] != array[i+1]) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  // checks to see if a straight is present
-  var checkStraight = function(array) {
-    var index = array.indexOf()
-    for(var i=0; i<array.length - 1; i++) {
-      if (array[i+1] - array[i] != 1) {
-        return false;
-      }
-    }
-    return true;
-  }
-  // checks to see if a flush is preset
-  var checkIfRoyalFlush = function(array) {
-    if(array[array.length-1] == 14){
-      return true;
-    } else {
-      return false;
-    };
-  }
-  // counts the similar elements in the persons hand (pairs, triples, full house)
-  var countMatches = function(array) {
-    var counts = {};
-    array.forEach(function(x) {counts[x] = (counts[x] || 0)+1; });
-    var pairCount = [];
-    for (var key in counts) {
-      pairCount.push(counts[key])
-    }
-    return pairCount;
-  }
-
-  var checkFourKind = function(array) {
-    if (array.indexOf(4) > -1) {
-      return true;
-    }else{
-      return false;
-    };
-  }
-
-  var checkTriples = function(array) {
-    if ($.inArray(3, array) > -1 ){
-      return true;
-    }else{
-      return false;
-    };
-  }
-
-  var checkPair = function(array) {
-    if ($.inArray(2, array) > -1) {
-      return true;
-    }else{
-      return false;
-    };
   }
 
   //assign score to hands based on hand value.
@@ -167,8 +178,8 @@ function getCards() {
     }else if (checkTriples(countMatches(value))) {
       return person.score = 300000;
     // two pair
-    // }else if {
-      // return person.score = 200000;
+    }else if (checkTwoPair(countMatches(value))){
+      return person.score = 200000;
     //one pair
     }else if (checkPair(countMatches(value))) {
       return person.score = 150000;
@@ -179,8 +190,8 @@ function getCards() {
   }
 
   // initialize scoring of hand.
-  var scoreOne = handScore(hand1, handOneSuit, handOneValue);
-  var scoreTwo = handScore(hand2, handTwoSuit, handTwoValue);
+  var scoreOne = handScore(firstHand, handOneSuit, handOneValue);
+  var scoreTwo = handScore(secondHand, handTwoSuit, handTwoValue);
 
   // compare scores and display winner. 
   if (scoreOne > scoreTwo){
@@ -193,6 +204,7 @@ function getCards() {
     $('#winner').text("IT's A TIE!")
 
   }
+
 };
 
 
