@@ -6,4 +6,3 @@ hands are entered in short form.
   
 BUGS TO FIX:
   higher card values are not compared. for example... an ace high straight would return a tie with a 6 high straight.
-  two pair does not register as a hand.
