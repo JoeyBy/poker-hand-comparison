@@ -40,6 +40,7 @@ var handTwo = [];
 function startgame() {
   newDeck(cardSuit, cardValue);
 }
+
 function showCards(hand, handID) {
   var cardOne = document.querySelector(handID + ' > .dealCardOne')
   var cardTwo = document.querySelector(handID + ' > .dealCardTwo')
