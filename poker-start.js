@@ -34,13 +34,13 @@ function dealHand(deck) {
 
 
 $(function () {
-var gameHand = [];
+var handOne = [];
+var handTwo = [];
 
 function startgame() {
   newDeck(cardSuit, cardValue);
 }
 function showCards(hand, handID) {
-  console.log(hand[0], hand[1], hand[2], hand[3], hand[4])
   var cardOne = document.querySelector(handID + ' > .dealCardOne')
   var cardTwo = document.querySelector(handID + ' > .dealCardTwo')
   var cardThree = document.querySelector(handID + ' > .dealCardThree')
@@ -58,9 +58,10 @@ function showCards(hand, handID) {
     startgame();
   })
   $('#dealCards').on('click', function() {
-    gameHand = dealHand(deck);
-    showCards(gameHand, '#handOne')
-    console.log(gameHand)
+    handOne = dealHand(deck);
+    handTwo = dealHand(deck);
+    showCards(handOne, '#handOne');
+    showCards(handTwo, '#handTwo');
   })
 //test
 })
