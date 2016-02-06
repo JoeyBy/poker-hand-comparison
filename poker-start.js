@@ -62,8 +62,6 @@ function showCards(hand) {
   $('#dealCards').on('click', function() {
     gameHand = dealHand(deck);
     showCards(gameHand)
-
-
   })
 //test
 })

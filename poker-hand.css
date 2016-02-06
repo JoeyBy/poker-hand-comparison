@@ -32,6 +32,10 @@ h1 {
 .handsDelt {
   margin-bottom: 300px;
 }
+.card {
+  font-size: 35px;
+  padding: 10px;
+}
 
 .cardButton {
   width: 200px;
