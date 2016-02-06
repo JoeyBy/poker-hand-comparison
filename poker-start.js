@@ -1,6 +1,9 @@
 var cardSuit = [ 'S', 'H', 'D', 'C'];
 var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' ];
-var deck = []
+var deck = [];
+var handOne = [];
+var handTwo = [];
+
 
 function newDeck(cardSuit, cardValue) {
   deck = [];
@@ -13,11 +16,11 @@ function newDeck(cardSuit, cardValue) {
       deck.push(cardThing.join(''))
     });
   }
-}
+};
 // generate a random number, this is the card out of the deck delt.
 function randomNumber(deck) {
   return Math.floor(Math.random() * (deck.length - 1)) + 1 
-}
+};
 
 function dealHand(deck) {
   var hand = [];
@@ -30,43 +33,62 @@ function dealHand(deck) {
   }
   //returns an array
   return hand;
-}
-
-
-$(function () {
-var handOne = [];
-var handTwo = [];
+};
 
 function startgame() {
   newDeck(cardSuit, cardValue);
-}
+};
 
 function showCards(hand, handID) {
-  var cardOne = document.querySelector(handID + ' > .dealCardOne')
-  var cardTwo = document.querySelector(handID + ' > .dealCardTwo')
-  var cardThree = document.querySelector(handID + ' > .dealCardThree')
-  var cardFour = document.querySelector(handID + ' > .dealCardFour')
-  var cardFive = document.querySelector(handID + ' > .dealCardFive')
+  var cardOne = document.querySelector(handID + ' > .dealCardOne');
+  var cardTwo = document.querySelector(handID + ' > .dealCardTwo');
+  var cardThree = document.querySelector(handID + ' > .dealCardThree');
+  var cardFour = document.querySelector(handID + ' > .dealCardFour');
+  var cardFive = document.querySelector(handID + ' > .dealCardFive');
 
-  cardOne.innerHTML = hand[0]
-  cardTwo.innerHTML = hand[1]
-  cardThree.innerHTML = hand[2]
-  cardFour.innerHTML = hand[3]
-  cardFive.innerHTML = hand[4]
+  cardOne.innerHTML = hand[0];
+  cardTwo.innerHTML = hand[1];
+  cardThree.innerHTML = hand[2];
+  cardFour.innerHTML = hand[3];
+  cardFive.innerHTML = hand[4];
+};
+
+function formatForScoring(hand) {
+  var hand = hand;
+  var suit = [];
+  var cardValue = [];
+
+  for (var i = 0; i < hand.length; i++ ) {
+
+
+    
+  }
+
+  hand.forEach(function (item, index, array) {
+
+  }
+
+  return {
+    suits: suit,
+    cardValue: cardValue
+  }
+
 }
 
+$(function () {
   $('#startDeal').on('click', function () {
     startgame();
     $('#dealCards').css({'display':'inline-block' })
-  })
+  });
   $('#dealCards').on('click', function() {
+
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
     showCards(handOne, '#handOne');
     showCards(handTwo, '#handTwo');
   })
 //test
-})
+});
 
 
 
