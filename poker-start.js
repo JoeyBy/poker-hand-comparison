@@ -21,7 +21,6 @@ function randomNumber(deck) {
 
 function dealHand(deck) {
   var hand = [];
-
   // pushes 5 elements from the deck array into the hand array. removes the card delt from the deck. 
   for (var i = 0; i < 5; i++ ) {
     var cardNumber = randomNumber(deck);
@@ -56,12 +55,13 @@ function showCards(hand) {
   cardFive.innerHTML = hand[4]
 }
 
-  $('#startGame').on('click', function () {
+  $('#startDeal').on('click', function () {
     startgame();
   })
   $('#dealCards').on('click', function() {
     gameHand = dealHand(deck);
     showCards(gameHand)
+    console.log(gameHand)
   })
 //test
 })
