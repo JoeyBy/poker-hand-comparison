@@ -15,21 +15,21 @@ function newDeck(cardSuit, cardValue) {
   //returns the new deck. 
   return deck;
 }
-
+// generate a random number, this is the card out of the deck delt.
 function randomNumber(deck) {
-  return Math.floor(Math.random() * (deck.length - 1 + 1)) + 1 
+  return Math.floor(Math.random() * (deck.length - 1)) + 1 
 }
 
 function dealHand(deck) {
   var hand = [];
 
+  // pushes 5 elements from the deck array into the hand array. removes the card delt from the deck. 
   for (var i = 0; i < 5; i++ ) {
     var cardNumber = randomNumber(deck);
     hand.push(deck[cardNumber])
     deck.splice(deck[cardNumber], 1)
   }
-  console.log(deck.length)
-  console.log(hand)
+  //returns an array
   return hand;
 }
 

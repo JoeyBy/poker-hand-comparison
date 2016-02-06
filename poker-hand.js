@@ -20,14 +20,14 @@ function getHand (selector) {
 var firstHand = {
   score: 0,
   cards: function() {
-    return getHand('#handOne input')
+    return getHand('#handOne-analysis input')
   },
 };
 
 var secondHand = {
   score: 0,
   cards: function() {
-    return getHand('#handTwo input')
+    return getHand('#handTwo-analysis input')
   },
 };
 
