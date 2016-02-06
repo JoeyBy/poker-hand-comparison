@@ -39,14 +39,13 @@ var gameHand = [];
 function startgame() {
   newDeck(cardSuit, cardValue);
 }
-function showCards(hand) {
+function showCards(hand, handID) {
   console.log(hand[0], hand[1], hand[2], hand[3], hand[4])
-  var cardOne = document.getElementById('dealCardOne')
-  var cardTwo = document.getElementById('dealCardTwo')
-  var cardThree = document.getElementById('dealCardThree')
-  var cardFour = document.getElementById('dealCardFour')
-  var cardFive = document.getElementById('dealCardFive')
-
+  var cardOne = document.querySelector(handID + ' > .dealCardOne')
+  var cardTwo = document.querySelector(handID + ' > .dealCardTwo')
+  var cardThree = document.querySelector(handID + ' > .dealCardThree')
+  var cardFour = document.querySelector(handID + ' > .dealCardFour')
+  var cardFive = document.querySelector(handID + ' > .dealCardFive')
 
   cardOne.innerHTML = hand[0]
   cardTwo.innerHTML = hand[1]
@@ -60,7 +59,7 @@ function showCards(hand) {
   })
   $('#dealCards').on('click', function() {
     gameHand = dealHand(deck);
-    showCards(gameHand)
+    showCards(gameHand, '#handOne')
     console.log(gameHand)
   })
 //test
