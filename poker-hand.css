@@ -1,55 +1,52 @@
-body {
-  font-family: "Ubuntu";
-}
 
-input {
-  width: 70px;
-  padding: 10px;
-  box-shadow: 0px 0px 10px lightgrey;
-  border: 0px;
-}
 
-input:hover {
-  background-color: #eef7fa;
-}
+body {font-family: "Ubuntu";margin: 0;}
+input {width: 70px;padding: 10px;box-shadow: 0px 0px 10px lightgrey;border: 0px;}
+input:hover {background-color: #eef7fa;}
+h1 {text-align: center;}
 
-h1 {
+#submit {width: 75px;}
+#dealCards {display: none;}
+#winner {font-size: 40px;text-align: center;}
+.container {width: 75%;margin-left: 12.5%;margin-right: 12.5%;}
+.fluid-container {width: 100%;}
+
+.handsDelt {margin-bottom: 30px;}
+.card {font-size: 35px;padding: 10px;}
+
+.handOuter {margin-top: 40px;width: 49%;display: inline-block;text-align: center;border: 1px solid #999999;border-radius: 5px;}
+.handOuter span {display: inline-block;}
+
+.buttonsOuter {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background: #2F2F2F;
   text-align: center;
 }
-
-#submit {
-  width: 75px;
-}
-
-#winner {
-  font-size: 40px;
-  text-align: center;
-}
-
-
-.container {
-  width: 75%;
-  margin-left: 12.5%;
-  margin-right: 12.5%;
-}
-
-.handsDelt {
-  margin-bottom: 300px;
-}
-.card {
-  font-size: 35px;
-  padding: 10px;
-}
-
 .cardButton {
   width: 200px;
   text-align: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border: 1px solid #000;
   border-radius: 5px;
+  display: inline-block;
+  background: #FFF;
 }
 .cardButton:hover {
   cursor: pointer;
-  background: #f1feee;
+  background: #4CA6FF;
+  color: #FFF;
 }
+
+
+
+@media screen and (max-width: 1100px) {
+  .container {width: 85%;margin-left: 7.5%;margin-right: 7.5%;}
+}
+@media screen and (max-width: 730px) {
+  .container {width: 100%;margin-left: 0%;margin-right: 0%;}
+}
+
+
+

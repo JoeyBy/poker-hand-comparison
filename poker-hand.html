@@ -8,11 +8,15 @@
     <link rel="stylesheet" type="text/css" href="poker-hand.css">
   </head>
   <body>
+  <section class="container">
+    <h1>Joey's Poker-palooza</h1>
+  </section>
+  <section class="fluid-container buttonsOuter">
+    <div id="startDeal" class="cardButton">Start Game</div>
+    <div id="dealCards" class="cardButton">Deal Cards</div>
+  </section>
   <section id="startDeal" class="container handsDelt">
-      <h1>Joey's Poker-palooza</h1>
-
-      <div class="cardButton">Start Game</div>
-      <div id="handOne">
+      <div id="handOne" class="handOuter">
         <h2>Player One</h2>
         <span class="card dealCardOne"></span>
         <span class="card dealCardTwo"></span>
@@ -20,19 +24,17 @@
         <span class="card dealCardFour"></span>
         <span class="card dealCardFive"></span>
       </div>
-      <div id="handTwo">
-        <h2>Player TWo</h2>
+      <div id="handTwo" class="handOuter">
+        <h2>Player Two</h2>
         <span class="card dealCardOne"></span>
         <span class="card dealCardTwo"></span>
         <span class="card dealCardThree"></span>
         <span class="card dealCardFour"></span>
         <span class="card dealCardFive"></span>
       </div>
-
-  <div id="dealCards" class="cardButton">Deal Cards</div>
-
   </section>
-  <h1>Joey's Poker Comparison</h1>
+
+  <!-- <h1>Joey's Poker Comparison</h1>
     <table>
       <td>
        <form id="handOne-analysis">
@@ -73,7 +75,7 @@
       <div>
         <span id="winner"></span>
       </div>
-    </table>
+    </table> -->
       <script type="text/javascript" src="poker-hand.js"></script>
       <script type="text/javascript" src="poker-start.js"></script>
   </body>

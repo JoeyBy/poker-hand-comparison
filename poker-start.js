@@ -57,6 +57,7 @@ function showCards(hand, handID) {
 
   $('#startDeal').on('click', function () {
     startgame();
+    $('#dealCards').css({'display':'inline-block' })
   })
   $('#dealCards').on('click', function() {
     handOne = dealHand(deck);
