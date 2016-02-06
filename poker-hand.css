@@ -32,3 +32,16 @@ h1 {
 .handsDelt {
   margin-bottom: 300px;
 }
+
+.cardButton {
+  width: 200px;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+.cardButton:hover {
+  cursor: pointer;
+  background: #f1feee;
+}
