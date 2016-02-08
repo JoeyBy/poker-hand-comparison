@@ -84,10 +84,8 @@ function extractCardValues(hand) {
 
 function faceCardstoIntegers(cardValueArray) 
 {
-  console.log(cardValueArray)
   var integerArray = cardValueArray.map(function(faceValue) 
   {
-      console.log("INSIDE THE MAP")
       if(faceValue == 'T') {
         return faceValue = 10;
       } else if (faceValue == "J") {
@@ -143,14 +141,25 @@ $(function ()
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
     scoreHand(testStraight,testNotStraight)
-    showCards(handOne, '#handOne');
-    showCards(handTwo, '#handTwo');
+    showCards(testStraight, '#handOne');
+    showCards(testNotStraight, '#handTwo');
     
   })
 //test
 });
 
 
+//POKER HANDS
+  //S + F  + A  //Royal Flush - five cards in sequence all the same suit A to T
+  //S + F  //Straight Flush - five cards in sequence all the same suit. not A to T
+  //4 of a kind - ...really?
+  //Full House - triple and a pair
+  //Flush - five cards the same suit
+  //straight - five cards in sequence not the same suit.
+  //3 of a kind.
+  //2 pair
+  //1 pair
+  //high card - the highest face value of one 5 card. If tied, the second highest is compared, etc. 
 
 
 // checks if the hand is a flush
@@ -167,31 +176,16 @@ function checkFlush(hand)
 }
 
 function checkStraight(hand) {
-  
-  var cardValueArray = extractCardValues(hand);
-
-  var formattedArray = faceCardstoIntegers(cardValueArray)
-
+  // this formattedArray variable is the faceCard value's converted to Integers and sorted with the lowest number first in an Array.
+  var formattedArray = faceCardstoIntegers(extractCardValues(hand)).sort(sortNumbers)
+  for (var i = 0; i < 4; i++) {
+    //if the n+1 card less the n card does not equal 1 then the loop breaks. Not a staight
+    if (formattedArray[i+1] - formattedArray[i] != 1){
+      return false;
+    }
+  }
+  //if the n+1 card less the n card does equal 1 explicitly returns true. Is a straight.
+  return true;
 }
-
-
-// function checkStraight(hand) {
-//   for
-// }
-
-//POKER HANDS
-  //S + F  + A  //Royal Flush - five cards in sequence all the same suit A to T
-  //S + F  //Straight Flush - five cards in sequence all the same suit. not A to T
-  //4 of a kind - ...really?
-  //Full House - triple and a pair
-  //Flush - five cards the same suit
-  //straight - five cards in sequence not the same suit.
-  //3 of a kind.
-  //2 pair
-  //1 pair
-  //high card - the highest face value of one 5 card. If tied, the second highest is compared, etc. 
-
-
-
 
 
