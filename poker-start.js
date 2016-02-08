@@ -11,14 +11,19 @@ var handTwo = [];
 
 
 function dealCard(deck) {
+  var cardNumber = randomNumber(deck)
   //take in one card from the game deck. 
-  var cardString = deck[randomNumber(deck)];
-  // suit and facevale of ONE card.
+  var cardString = deck[cardNumber];
+  //removes the card from the deck
+  deck.splice(cardNumber, 1);
+  // suit and facevale of ONE card returned as object.
   var card = {
     suit: cardString[0],
     faceValue: cardString[1]
   };
+  console.log(card)
   return card;
+
 }
 
 
@@ -43,12 +48,10 @@ function dealHand(deck) {
   var hand = [];
   // pushes 5 elements from the deck array into the hand array. removes the card delt from the deck. 
   for (var i = 0; i < 5; i++ ) {
-    var cardNumber = randomNumber(deck);
-
-    hand.push(deck[cardNumber]);
-    deck.splice(cardNumber, 1);
+    hand.push(dealCard(deck))
   }
   //returns an array
+  console.log(hand)
   return hand;
 };
 
