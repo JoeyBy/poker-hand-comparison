@@ -65,11 +65,11 @@ function showCards(hand, handID) {
   var cardFour = document.querySelector(handID + ' > .dealCardFour');
   var cardFive = document.querySelector(handID + ' > .dealCardFive');
 
-  cardOne.innerHTML = hand[0];
-  cardTwo.innerHTML = hand[1];
-  cardThree.innerHTML = hand[2];
-  cardFour.innerHTML = hand[3];
-  cardFive.innerHTML = hand[4];
+  cardOne.innerHTML = hand[0].faceValue + hand[0].suit;
+  cardTwo.innerHTML = hand[1].faceValue + hand[1].suit;
+  cardThree.innerHTML = hand[2].faceValue + hand[2].suit;
+  cardFour.innerHTML = hand[3].faceValue + hand[3].suit;
+  cardFive.innerHTML = hand[4].faceValue + hand[4].suit;
 };
 
 function formatForScoring(hand) {
