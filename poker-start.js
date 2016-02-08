@@ -10,9 +10,9 @@ $(function ()
   {
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
-    scoreHand(testFourKind,testNotFourKind)
-    showCards(testFourKind, '#handOne');
-    showCards(testNotFourKind, '#handTwo');
+    scoreHand(testFullHouse, testThreeKind)
+    showCards(testFullHouse, '#handOne');
+    showCards(testThreeKind, '#handTwo');
     
   });
 });
@@ -34,7 +34,8 @@ var testNotStraight = [ {suit: 'H', faceValue: '7'}, {suit: 'D', faceValue: '5'}
 //Test Hands for 4 of a Kind
 var testFourKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'D', faceValue: '4'}, {suit: 'S', faceValue: '4'}, {suit: 'H', faceValue: '4'}, {suit: 'C', faceValue: '4'}]
 var testNotFourKind = [ {suit: 'H', faceValue: '2'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
-
+var testThreeKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'C', faceValue: 'J'}, {suit: 'D', faceValue: 'J'}, {suit: 'H', faceValue: '6'}, {suit: 'C', faceValue: '2'}]
+var testFullHouse = [ {suit: 'H', faceValue: 'K'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: 'Q'}, {suit: 'H', faceValue: 'Q'}, {suit: 'C', faceValue: 'Q'}]
 
 function dealCard(deck) 
 {
@@ -135,6 +136,7 @@ function countDuplicates(hand)
   return counts;
 }
 
+
 function showCards(hand, handID) 
 {
   var cardOne = document.querySelector(handID + ' > .dealCardOne');
@@ -207,13 +209,15 @@ function checkStraight(hand)
 
 function checkFourKind(hand)
 {
-  //This takes in an object with key - values pairs of the duplicate card values. 
-  //A four of a kind can only have 2 different number in it. Therefore, if the length of the object
-  //key pairs doesn't equal 2 it is impossible for it to be four of a kind.
-  if (Object.keys(countDuplicates(hand)).length != 2) {
-    return false;
-  } else {
-    return true;
+  var keyObject = countDuplicates(hand)
+  var duplicateKeys = Object.keys(keyObject)
+
+  for (var i = 0; i < duplicateKeys.length; i++){
+      if (keyObject[duplicateKeys[i]] != 4 ) {
+        return false;
+      } else {
+        return true;
+      }
   }
 }
 
