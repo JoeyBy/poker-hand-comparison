@@ -10,6 +10,18 @@ var handOne = [];
 var handTwo = [];
 
 
+function dealCard(deck) {
+  //take in one card from the game deck. 
+  var cardString = deck[randomNumber(deck)];
+  // suit and facevale of ONE card.
+  var card = {
+    suit: cardString[0],
+    faceValue: cardString[1]
+  };
+  return card;
+}
+
+
 function newDeck(cardSuit, cardValue) {
   deck = [];
 // creates a new deck with suit and value pairs. pushes the pairs to the deck array as they are paired up. 
@@ -83,6 +95,7 @@ function formatForScoring(hand) {
 $(function () {
   $('#startDeal').on('click', function () {
     startgame();
+    dealCard(deck);
     $('#dealCards').css({'display':'inline-block' })
   });
   $('#dealCards').on('click', function() {
