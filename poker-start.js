@@ -1,3 +1,8 @@
+// new idea:
+// store card objects in a hand array. 
+// iterate through the card objects for scoring rather than splicing and pushing array items. 
+
+
 var cardSuit = [ 'S', 'H', 'D', 'C'];
 var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' ];
 var deck = [];
@@ -61,12 +66,12 @@ function formatForScoring(hand) {
   for (var i = 0; i < hand.length; i++ ) {
 
 
-    
+
   }
 
   hand.forEach(function (item, index, array) {
 
-  }
+  })
 
   return {
     suits: suit,
