@@ -127,6 +127,13 @@ function cardValuesSorted(hand)
   return faceCardstoIntegers(extractCardValues(hand)).sort(sortNumbers)
 }
 
+function countDuplicates(hand)
+{
+  //returns the number of duplicate cards. 
+  var counts = {}
+  cardValuesSorted(hand).forEach(function(s) {counts[s] = (counts[s] || 0) + 1 });
+  return counts;
+}
 
 function showCards(hand, handID) 
 {
@@ -196,14 +203,6 @@ function checkStraight(hand)
   }
   //if the n+1 card less the n card does equal 1 explicitly returns true. Is a straight.
   return true;
-}
-
-function countDuplicates(hand)
-{
-  //returns the number of duplicate cards. 
-  var counts = {}
-  cardValuesSorted(hand).forEach(function(s) {counts[s] = (counts[s] || 0) + 1 });
-  return counts;
 }
 
 function checkFourKind(hand)
