@@ -9,6 +9,9 @@ var deck = [];
 var handOne = [];
 var handTwo = [];
 
+//Test Hands for determining a flush
+// var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
+// var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 
 function dealCard(deck) {
   var cardNumber = randomNumber(deck)
@@ -72,7 +75,17 @@ function showCards(hand, handID) {
   cardFive.innerHTML = hand[4].faceValue + hand[4].suit;
 };
 
+function scoreHand(handOne, handTwo) {
+  var handOneScore = 0;
+  var handTwoScore = 0;
 
+  checkFlush(handOne)
+  checkFlush(handTwo)
+
+
+
+
+}
 
 $(function () {
   $('#startDeal').on('click', function () {
@@ -84,14 +97,45 @@ $(function () {
 
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
+    console.log(testFlush)
+    scoreHand(testFlush,testNotFlush)
     showCards(handOne, '#handOne');
     showCards(handTwo, '#handTwo');
+    
   })
 //test
 });
 
 
+// checks if the hand is a flush
+function checkFlush(hand) {
+  for (var i = 0; i < 4; i++) {
+    //if the first suit does not equal the next cards suit the loop breaks and return false. 
+    if (hand[i].suit != hand[i+1].suit){
+      return false;
+    }
+  }
+  //if the loop does not fail the hand is a flush explicitly returning true. 
+  return true;
+}
 
+
+
+// function checkStraight(hand) {
+//   for
+// }
+
+//POKER HANDS
+  //S + F  + A  //Royal Flush - five cards in sequence all the same suit A to T
+  //S + F  //Straight Flush - five cards in sequence all the same suit. not A to T
+  //4 of a kind - ...really?
+  //Full House - triple and a pair
+  //Flush - five cards the same suit
+  //straight - five cards in sequence not the same suit.
+  //3 of a kind.
+  //2 pair
+  //1 pair
+  //high card - the highest face value of one 5 card. If tied, the second highest is compared, etc. 
 
 
 
