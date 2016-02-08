@@ -152,8 +152,8 @@ function scoreHand(handOne, handTwo)
   // checkFlush(handTwo)
   // checkStraight(handOne);
   // checkStraight(handTwo);
-  countDuplicates(handOne)
-  countDuplicates(handTwo)
+  checkFourKind(handOne)
+  checkFourKind(handTwo)
 }
 
 
@@ -203,8 +203,19 @@ function countDuplicates(hand)
   //returns the number of duplicate cards. 
   var counts = {}
   cardValuesSorted(hand).forEach(function(s) {counts[s] = (counts[s] || 0) + 1 });
-
   return counts;
+}
+
+function checkFourKind(hand)
+{
+  //This takes in an object with key - values pairs of the duplicate card values. 
+  //A four of a kind can only have 2 different number in it. Therefore, if the length of the object
+  //key pairs doesn't equal 2 it is impossible for it to be four of a kind.
+  if (Object.keys(countDuplicates(hand)).length != 2) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 
