@@ -13,6 +13,11 @@ var handTwo = [];
 // var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
 // var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 
+//Test Hands for determining a straight
+var testStraight = [ {suit: 'H', faceValue: 'J'}, {suit: 'H', faceValue: 'K'}, {suit: 'D', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+var testNotStraight = [ {suit: 'H', faceValue: '7'}, {suit: 'D', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'T'}, {suit: 'C', faceValue: 'T'}]
+
+
 function dealCard(deck) {
   var cardNumber = randomNumber(deck)
   //take in one card from the game deck. 
@@ -79,9 +84,10 @@ function scoreHand(handOne, handTwo) {
   var handOneScore = 0;
   var handTwoScore = 0;
 
-  checkFlush(handOne)
-  checkFlush(handTwo)
-
+  // checkFlush(handOne)
+  // checkFlush(handTwo)
+  checkStraight(handOne);
+  checkStraight(handTwo);
 
 
 
@@ -94,17 +100,23 @@ $(function () {
     $('#dealCards').css({'display':'inline-block' })
   });
   $('#dealCards').on('click', function() {
-
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
-    console.log(testFlush)
-    scoreHand(testFlush,testNotFlush)
+    scoreHand(testStraight,testNotStraight)
     showCards(handOne, '#handOne');
     showCards(handTwo, '#handTwo');
     
   })
 //test
 });
+
+function extractCardValues(hand) {
+  var faceValueArray = [];
+  for (var i = 0; i < hand.length; i++) {
+    faceValueArray.push(hand[i].faceValue)
+  }
+  return faceValueArray;
+}
 
 
 // checks if the hand is a flush
@@ -119,6 +131,17 @@ function checkFlush(hand) {
   return true;
 }
 
+function checkStraight(hand) {
+  // converts T, J, Q, K and A to integers.
+  var cardValues = extractCardValues(hand);
+
+  console.log(hand)
+  console.log(cardValues)
+
+
+
+
+}
 
 
 // function checkStraight(hand) {
