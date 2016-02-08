@@ -72,27 +72,7 @@ function showCards(hand, handID) {
   cardFive.innerHTML = hand[4].faceValue + hand[4].suit;
 };
 
-function formatForScoring(hand) {
-  var hand = hand;
-  var suit = [];
-  var cardValue = [];
 
-  for (var i = 0; i < hand.length; i++ ) {
-
-
-
-  }
-
-  hand.forEach(function (item, index, array) {
-
-  })
-
-  return {
-    suits: suit,
-    cardValue: cardValue
-  }
-
-}
 
 $(function () {
   $('#startDeal').on('click', function () {
