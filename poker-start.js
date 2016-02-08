@@ -1,7 +1,21 @@
-// new idea:
-// store card objects in a hand array. 
-// iterate through the card objects for scoring rather than splicing and pushing array items. 
-
+$(function () 
+{
+  $('#startDeal').on('click', function () 
+  {
+    startgame();
+    dealCard(deck);
+    $('#dealCards').css({'display':'inline-block' })
+  });
+  $('#dealCards').on('click', function() 
+  {
+    handOne = dealHand(deck);
+    handTwo = dealHand(deck);
+    scoreHand(testFourKind,testNotFourKind)
+    showCards(testFourKind, '#handOne');
+    showCards(testNotFourKind, '#handTwo');
+    
+  });
+});
 
 var cardSuit = [ 'S', 'H', 'D', 'C'];
 var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' ];
@@ -10,12 +24,16 @@ var handOne = [];
 var handTwo = [];
 
 //Test Hands for determining a flush
-// var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
-// var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
+var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 
 //Test Hands for determining a straight
 var testStraight = [ {suit: 'H', faceValue: 'J'}, {suit: 'H', faceValue: 'K'}, {suit: 'D', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 var testNotStraight = [ {suit: 'H', faceValue: '7'}, {suit: 'D', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'T'}, {suit: 'C', faceValue: 'T'}]
+
+//Test Hands for 4 of a Kind
+var testFourKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'D', faceValue: '4'}, {suit: 'S', faceValue: '4'}, {suit: 'H', faceValue: '4'}, {suit: 'C', faceValue: '4'}]
+var testNotFourKind = [ {suit: 'H', faceValue: '2'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 
 
 function dealCard(deck) 
@@ -72,15 +90,16 @@ function startgame()
 function sortNumbers(a,b) 
 {
   return a - b;
-}
+};
 
-function extractCardValues(hand) {
+function extractCardValues(hand) 
+{
   var faceValueArray = [];
   for (var i = 0; i < hand.length; i++) {
     faceValueArray.push(hand[i].faceValue)
   }
   return faceValueArray;
-}
+};
 
 function faceCardstoIntegers(cardValueArray) 
 {
@@ -101,6 +120,11 @@ function faceCardstoIntegers(cardValueArray)
       }
     })
   return integerArray;
+}
+
+function cardValuesSorted(hand)
+{
+  return faceCardstoIntegers(extractCardValues(hand)).sort(sortNumbers)
 }
 
 
@@ -126,31 +150,16 @@ function scoreHand(handOne, handTwo)
 
   // checkFlush(handOne)
   // checkFlush(handTwo)
-  checkStraight(handOne);
-  checkStraight(handTwo);
+  // checkStraight(handOne);
+  // checkStraight(handTwo);
+  countDuplicates(handOne)
+  countDuplicates(handTwo)
 }
 
-$(function () 
-{
-  $('#startDeal').on('click', function () {
-    startgame();
-    dealCard(deck);
-    $('#dealCards').css({'display':'inline-block' })
-  });
-  $('#dealCards').on('click', function() {
-    handOne = dealHand(deck);
-    handTwo = dealHand(deck);
-    scoreHand(testStraight,testNotStraight)
-    showCards(testStraight, '#handOne');
-    showCards(testNotStraight, '#handTwo');
-    
-  })
-//test
-});
 
 
 //POKER HANDS
-  //S + F  + A  //Royal Flush - five cards in sequence all the same suit A to T
+  //S + F  +  A //Royal Flush - five cards in sequence all the same suit A to T
   //S + F  //Straight Flush - five cards in sequence all the same suit. not A to T
   //4 of a kind - ...really?
   //Full House - triple and a pair
@@ -175,9 +184,10 @@ function checkFlush(hand)
   return true;
 }
 
-function checkStraight(hand) {
+function checkStraight(hand) 
+{
   // this formattedArray variable is the faceCard value's converted to Integers and sorted with the lowest number first in an Array.
-  var formattedArray = faceCardstoIntegers(extractCardValues(hand)).sort(sortNumbers)
+  var formattedArray = cardValuesSorted(hand)
   for (var i = 0; i < 4; i++) {
     //if the n+1 card less the n card does not equal 1 then the loop breaks. Not a staight
     if (formattedArray[i+1] - formattedArray[i] != 1){
@@ -187,5 +197,16 @@ function checkStraight(hand) {
   //if the n+1 card less the n card does equal 1 explicitly returns true. Is a straight.
   return true;
 }
+
+function countDuplicates(hand)
+{
+  //returns the number of duplicate cards. 
+  var counts = {}
+  cardValuesSorted(hand).forEach(function(s) {counts[s] = (counts[s] || 0) + 1 });
+
+  return counts;
+}
+
+
 
 
