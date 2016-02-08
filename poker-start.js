@@ -51,15 +51,17 @@ function dealCard(deck)
     faceValue: cardString[1]
   };
   return card;
-}
+};
 
 function newDeck(cardSuit, cardValue) 
 {
   deck = [];
 // creates a new deck with suit and value pairs. pushes the pairs to the deck array as they are paired up. 
-  for (var i = 0; i < cardSuit.length; i++) {
+  for (var i = 0; i < cardSuit.length; i++) 
+  {
     var suit = cardSuit[i]
-    cardValue.forEach(function (item, index, array) {
+    cardValue.forEach(function (item, index, array) 
+    {
       var cardThing = []
       cardThing.push(suit, item)
       deck.push(cardThing.join(''))
@@ -76,7 +78,8 @@ function dealHand(deck)
 {
   var hand = [];
   // pushes 5 elements from the deck array into the hand array. removes the card delt from the deck. 
-  for (var i = 0; i < 5; i++ ) {
+  for (var i = 0; i < 5; i++ ) 
+  {
     hand.push(dealCard(deck))
   }
   //returns an array
@@ -96,7 +99,8 @@ function sortNumbers(a,b)
 function extractCardValues(hand) 
 {
   var faceValueArray = [];
-  for (var i = 0; i < hand.length; i++) {
+  for (var i = 0; i < hand.length; i++) 
+  {
     faceValueArray.push(hand[i].faceValue)
   }
   return faceValueArray;
@@ -183,9 +187,11 @@ function scoreHand(handOne, handTwo)
 // checks if the hand is a flush
 function checkFlush(hand) 
 {
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < 4; i++) 
+  {
     //if the first suit does not equal the next cards suit the loop breaks and return false. 
-    if (hand[i].suit != hand[i+1].suit){
+    if (hand[i].suit != hand[i+1].suit)
+    {
       return false;
     }
   }
@@ -196,30 +202,33 @@ function checkFlush(hand)
 function checkStraight(hand) 
 {
   // this formattedArray variable is the faceCard value's converted to Integers and sorted with the lowest number first in an Array.
-  var formattedArray = cardValuesSorted(hand)
-  for (var i = 0; i < 4; i++) {
+  var formattedArray = cardValuesSorted(hand);
+  for (var i = 0; i < 4; i++) 
+  {
     //if the n+1 card less the n card does not equal 1 then the loop breaks. Not a staight
-    if (formattedArray[i+1] - formattedArray[i] != 1){
+    if (formattedArray[i+1] - formattedArray[i] != 1)
+    {
       return false;
     }
   }
   //if the n+1 card less the n card does equal 1 explicitly returns true. Is a straight.
   return true;
-}
+};
 
 function checkFourKind(hand)
 {
-  var keyObject = countDuplicates(hand)
-  var duplicateKeys = Object.keys(keyObject)
+  var keyObject = countDuplicates(hand);
+  var duplicateKeys = Object.keys(keyObject);
 
-  for (var i = 0; i < duplicateKeys.length; i++){
-      if (keyObject[duplicateKeys[i]] != 4 ) {
-        return false;
-      } else {
-        return true;
-      }
+  for (var i = 0; i < duplicateKeys.length; i++)
+  {
+    if (keyObject[duplicateKeys[i]] != 4 ) {
+      return false;
+    } else {
+      return true;
+    }
   }
-}
+};
 
 
 
