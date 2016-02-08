@@ -18,7 +18,8 @@ var testStraight = [ {suit: 'H', faceValue: 'J'}, {suit: 'H', faceValue: 'K'}, {
 var testNotStraight = [ {suit: 'H', faceValue: '7'}, {suit: 'D', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'T'}, {suit: 'C', faceValue: 'T'}]
 
 
-function dealCard(deck) {
+function dealCard(deck) 
+{
   var cardNumber = randomNumber(deck)
   //take in one card from the game deck. 
   var cardString = deck[cardNumber];
@@ -31,11 +32,10 @@ function dealCard(deck) {
     faceValue: cardString[1]
   };
   return card;
-
 }
 
-
-function newDeck(cardSuit, cardValue) {
+function newDeck(cardSuit, cardValue) 
+{
   deck = [];
 // creates a new deck with suit and value pairs. pushes the pairs to the deck array as they are paired up. 
   for (var i = 0; i < cardSuit.length; i++) {
@@ -48,11 +48,13 @@ function newDeck(cardSuit, cardValue) {
   }
 };
 // generate a random number, this is the card out of the deck delt.
-function randomNumber(deck) {
+function randomNumber(deck) 
+{
   return Math.floor(Math.random() * (deck.length - 1)) + 1 
 };
 
-function dealHand(deck) {
+function dealHand(deck) 
+{
   var hand = [];
   // pushes 5 elements from the deck array into the hand array. removes the card delt from the deck. 
   for (var i = 0; i < 5; i++ ) {
@@ -62,11 +64,50 @@ function dealHand(deck) {
   return hand;
 };
 
-function startgame() {
+function startgame() 
+{
   newDeck(cardSuit, cardValue);
 };
 
-function showCards(hand, handID) {
+function sortNumbers(a,b) 
+{
+  return a - b;
+}
+
+function extractCardValues(hand) {
+  var faceValueArray = [];
+  for (var i = 0; i < hand.length; i++) {
+    faceValueArray.push(hand[i].faceValue)
+  }
+  return faceValueArray;
+}
+
+function faceCardstoIntegers(cardValueArray) 
+{
+  console.log(cardValueArray)
+  var integerArray = cardValueArray.map(function(faceValue) 
+  {
+      console.log("INSIDE THE MAP")
+      if(faceValue == 'T') {
+        return faceValue = 10;
+      } else if (faceValue == "J") {
+        return faceValue = 11;
+      } else if (faceValue == "Q") {
+        return faceValue = 12;
+      } else if (faceValue == "K") {
+        return faceValue = 13;
+      } else if (faceValue == "A") {
+        return faceValue = 14;
+      } else {
+        return parseInt(faceValue);
+      }
+    })
+  return integerArray;
+}
+
+
+function showCards(hand, handID) 
+{
   var cardOne = document.querySelector(handID + ' > .dealCardOne');
   var cardTwo = document.querySelector(handID + ' > .dealCardTwo');
   var cardThree = document.querySelector(handID + ' > .dealCardThree');
@@ -80,7 +121,8 @@ function showCards(hand, handID) {
   cardFive.innerHTML = hand[4].faceValue + hand[4].suit;
 };
 
-function scoreHand(handOne, handTwo) {
+function scoreHand(handOne, handTwo) 
+{
   var handOneScore = 0;
   var handTwoScore = 0;
 
@@ -88,12 +130,10 @@ function scoreHand(handOne, handTwo) {
   // checkFlush(handTwo)
   checkStraight(handOne);
   checkStraight(handTwo);
-
-
-
 }
 
-$(function () {
+$(function () 
+{
   $('#startDeal').on('click', function () {
     startgame();
     dealCard(deck);
@@ -110,17 +150,12 @@ $(function () {
 //test
 });
 
-function extractCardValues(hand) {
-  var faceValueArray = [];
-  for (var i = 0; i < hand.length; i++) {
-    faceValueArray.push(hand[i].faceValue)
-  }
-  return faceValueArray;
-}
+
 
 
 // checks if the hand is a flush
-function checkFlush(hand) {
+function checkFlush(hand) 
+{
   for (var i = 0; i < 4; i++) {
     //if the first suit does not equal the next cards suit the loop breaks and return false. 
     if (hand[i].suit != hand[i+1].suit){
@@ -132,14 +167,10 @@ function checkFlush(hand) {
 }
 
 function checkStraight(hand) {
-  // converts T, J, Q, K and A to integers.
-  var cardValues = extractCardValues(hand);
+  
+  var cardValueArray = extractCardValues(hand);
 
-  console.log(hand)
-  console.log(cardValues)
-
-
-
+  var formattedArray = faceCardstoIntegers(cardValueArray)
 
 }
 
