@@ -165,8 +165,8 @@ function scoreHand(handOne, handTwo)
   // checkFlush(handTwo)
   // checkStraight(handOne);
   // checkStraight(handTwo);
-  checkFourKind(handOne)
-  checkFourKind(handTwo)
+  checkThreeKind(handOne)
+  checkThreeKind(handTwo)
 }
 
 
@@ -230,6 +230,30 @@ function checkFourKind(hand)
   }
 };
 
+function checkThreeKind(hand) 
+{
+  console.log(countDuplicates(hand))
+  var keyObject = countDuplicates(hand);
+  var vals =[];
+
+  var vals = Object.keys(keyObject).map(function (key) {
+    return keyObject[key];
+  })
+  console.log(vals)
+
+  for (var i = 0; i< duplicateKeys.length; i++) 
+  {
+    console.log(keyObject[duplicateKeys[i]])
+    if (keyObject[duplicateKeys[i]] != 3) 
+    {
+      console.log("NOT 3 OF A KIND")
+      return false;
+    } else {
+      console.log("3 OF A KIND")
+      return true;
+    }
+  }
+};
 
 
 
