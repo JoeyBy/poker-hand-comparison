@@ -1,7 +1,6 @@
 # A 5 card poker application. 
 
 - Current active branch is score-hands
-Random card is delt to the player. 
 
 - In progress. 
    - comparing hand scores
