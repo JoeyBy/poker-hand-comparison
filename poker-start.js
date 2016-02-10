@@ -10,30 +10,30 @@ $(function ()
   {
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
-    scoreHand(testFullHouse, testThreeKind)
-    showCards(testFullHouse, '#handOne');
+    scoreHand(testStraight, testThreeKind)
+    showCards(testStraight, '#handOne');
     showCards(testThreeKind, '#handTwo');
     
   });
 });
 
 var cardSuit = [ 'S', 'H', 'D', 'C'];
-var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' ];
+var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A' ];
 var deck = [];
 var handOne = [];
 var handTwo = [];
 
 //Test Hands for determining a flush
-var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
-var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
+var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 
 //Test Hands for determining a straight
-var testStraight = [ {suit: 'H', faceValue: 'J'}, {suit: 'H', faceValue: 'K'}, {suit: 'D', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
-var testNotStraight = [ {suit: 'H', faceValue: '7'}, {suit: 'D', faceValue: '5'}, {suit: 'H', faceValue: 'T'}, {suit: 'H', faceValue: 'T'}, {suit: 'C', faceValue: 'T'}]
+var testStraight = [ {suit: 'H', faceValue: 'J'}, {suit: 'H', faceValue: 'K'}, {suit: 'D', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+var testNotStraight = [ {suit: 'H', faceValue: '7'}, {suit: 'D', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'T'}, {suit: 'C', faceValue: '10'}]
 
 //Test Hands for 4 of a Kind
 var testFourKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'D', faceValue: '4'}, {suit: 'S', faceValue: '4'}, {suit: 'H', faceValue: '4'}, {suit: 'C', faceValue: '4'}]
-var testNotFourKind = [ {suit: 'H', faceValue: '2'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: 'T'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+var testNotFourKind = [ {suit: 'H', faceValue: '2'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 var testThreeKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'C', faceValue: 'J'}, {suit: 'D', faceValue: 'J'}, {suit: 'H', faceValue: '6'}, {suit: 'C', faceValue: '2'}]
 var testFullHouse = [ {suit: 'H', faceValue: 'K'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: 'Q'}, {suit: 'H', faceValue: 'Q'}, {suit: 'C', faceValue: 'Q'}]
 
@@ -110,9 +110,7 @@ function faceCardstoIntegers(cardValueArray)
 {
   var integerArray = cardValueArray.map(function(faceValue) 
   {
-      if(faceValue == 'T') {
-        return faceValue = 10;
-      } else if (faceValue == "J") {
+      if (faceValue == "J") {
         return faceValue = 11;
       } else if (faceValue == "Q") {
         return faceValue = 12;
@@ -230,29 +228,23 @@ function checkFourKind(hand)
   }
 };
 
+
 function checkThreeKind(hand) 
 {
-  console.log(countDuplicates(hand))
   var keyObject = countDuplicates(hand);
   var vals =[];
 
-  var vals = Object.keys(keyObject).map(function (key) {
+  var vals = Object.keys(keyObject).map(function (key) 
+  {
     return keyObject[key];
   })
-  console.log(vals)
-
-  for (var i = 0; i< duplicateKeys.length; i++) 
+  if (vals.indexOf(3) == -1) 
   {
-    console.log(keyObject[duplicateKeys[i]])
-    if (keyObject[duplicateKeys[i]] != 3) 
-    {
-      console.log("NOT 3 OF A KIND")
-      return false;
-    } else {
-      console.log("3 OF A KIND")
-      return true;
-    }
+    return false;
+  } else {
+    return true;
   }
+
 };
 
 
