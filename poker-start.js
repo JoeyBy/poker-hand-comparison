@@ -10,9 +10,9 @@ $(function ()
   {
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
-    scoreHand(testStraight, testThreeKind)
-    showCards(testStraight, '#handOne');
-    showCards(testThreeKind, '#handTwo');
+    scoreHand(handOne, handTwo)
+    showCards(handOne, '#handOne');
+    showCards(handTwo, '#handTwo');
     
   });
 });
@@ -24,18 +24,18 @@ var handOne = [];
 var handTwo = [];
 
 //Test Hands for determining a flush
-var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
-var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+// var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
+// var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+// var testStraight = [ {suit: 'H', faceValue: 'J'}, {suit: 'H', faceValue: 'K'}, {suit: 'D', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+// var testNotStraight = [ {suit: 'H', faceValue: '7'}, {suit: 'D', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'T'}, {suit: 'C', faceValue: '10'}]
+// var testFourKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'D', faceValue: '4'}, {suit: 'S', faceValue: '4'}, {suit: 'H', faceValue: '4'}, {suit: 'C', faceValue: '4'}]
+// var testNotFourKind = [ {suit: 'H', faceValue: '2'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+// var testThreeKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'C', faceValue: 'J'}, {suit: 'D', faceValue: 'J'}, {suit: 'H', faceValue: '6'}, {suit: 'C', faceValue: '2'}]
+// var testFullHouse = [ {suit: 'H', faceValue: 'K'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: 'Q'}, {suit: 'H', faceValue: 'Q'}, {suit: 'C', faceValue: 'Q'}]
+// var testRoyalFlush = [ {suit: 'C', faceValue: '10'}, {suit: 'C', faceValue: 'K'}, {suit: 'C', faceValue: 'J'}, {suit: 'C', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
+// var testStraightFlush = [ {suit: 'C', faceValue: '7'}, {suit: 'C', faceValue: '4'}, {suit: 'C', faceValue: '5'}, {suit: 'C', faceValue: '6'}, {suit: 'C', faceValue: '8'}]
 
-//Test Hands for determining a straight
-var testStraight = [ {suit: 'H', faceValue: 'J'}, {suit: 'H', faceValue: 'K'}, {suit: 'D', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
-var testNotStraight = [ {suit: 'H', faceValue: '7'}, {suit: 'D', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'T'}, {suit: 'C', faceValue: '10'}]
 
-//Test Hands for 4 of a Kind
-var testFourKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'D', faceValue: '4'}, {suit: 'S', faceValue: '4'}, {suit: 'H', faceValue: '4'}, {suit: 'C', faceValue: '4'}]
-var testNotFourKind = [ {suit: 'H', faceValue: '2'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
-var testThreeKind = [ {suit: 'H', faceValue: 'J'}, {suit: 'C', faceValue: 'J'}, {suit: 'D', faceValue: 'J'}, {suit: 'H', faceValue: '6'}, {suit: 'C', faceValue: '2'}]
-var testFullHouse = [ {suit: 'H', faceValue: 'K'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: 'Q'}, {suit: 'H', faceValue: 'Q'}, {suit: 'C', faceValue: 'Q'}]
 
 function dealCard(deck) 
 {
@@ -163,8 +163,8 @@ function scoreHand(handOne, handTwo)
   // checkFlush(handTwo)
   // checkStraight(handOne);
   // checkStraight(handTwo);
-  checkThreeKind(handOne)
-  checkThreeKind(handTwo)
+  checkRoyalFlush(handOne)
+  checkRoyalFlush(handTwo)
 }
 
 
@@ -182,6 +182,27 @@ function scoreHand(handOne, handTwo)
   //high card - the highest face value of one 5 card. If tied, the second highest is compared, etc. 
 
 
+function checkRoyalFlush(hand)
+{
+  if (checkFlush(hand) && checkStraight(hand) && containsAce(hand))
+  {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function containsAce(hand)
+{
+  if (cardValuesSorted(hand)[4] == 14) 
+  {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 //checks if a hand has both a straight and a flush. 
 function checkStraightFlush(hand) 
 {
@@ -192,7 +213,6 @@ function checkStraightFlush(hand)
     return false;
   }
 }
-
 
 // checks if the hand is a flush
 function checkFlush(hand) 
