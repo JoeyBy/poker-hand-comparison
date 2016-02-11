@@ -182,6 +182,18 @@ function scoreHand(handOne, handTwo)
   //high card - the highest face value of one 5 card. If tied, the second highest is compared, etc. 
 
 
+//checks if a hand has both a straight and a flush. 
+function checkStraightFlush(hand) 
+{
+  if (checkFlush(hand) && checkStraight(hand))
+  {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 // checks if the hand is a flush
 function checkFlush(hand) 
 {
