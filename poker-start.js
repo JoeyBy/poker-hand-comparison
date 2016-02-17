@@ -10,7 +10,8 @@ $(function ()
   {
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
-    scoreHand(handOne, handTwo)
+    scoreHand(handOne)
+    scoreHand(handTwo)
     showCards(handOne, '#handOne');
     showCards(handTwo, '#handTwo');
     
@@ -154,17 +155,46 @@ function showCards(hand, handID)
   cardFive.innerHTML = hand[4].faceValue + hand[4].suit;
 };
 
-function scoreHand(handOne, handTwo) 
+function scoreHand(hand) 
 {
-  var handOneScore = 0;
-  var handTwoScore = 0;
+  var score = 0;
 
-  // checkFlush(handOne)
-  // checkFlush(handTwo)
-  // checkStraight(handOne);
-  // checkStraight(handTwo);
-  checkRoyalFlush(handOne)
-  checkRoyalFlush(handTwo)
+  console.log(checkPair(hand))
+
+  switch (hand) {
+    case checkRoyalFlush(hand):
+      //one million points
+      score = 1000000;
+      break;
+    case checkStraightFlush(hand):
+      // nine hundred thousand
+      score = 900000;
+      break;
+    case checkFourKind(hand):
+      // eight hundred thousand
+      score = 800000;
+      break;
+    case checkFullHouse(hand):
+      //Seven hundred thousand
+      score = 700000;
+      break;
+    case checkFlush(hand):
+      //Six hundred thousand
+      score = 600000;
+      break;
+    case checkStraight(hand):
+      score = 500000;
+      break;
+    case checkThreeKind(hand):
+      score = 400000;
+      break;
+
+  }
+
+
+
+
+  return score;
 }
 
 
@@ -191,18 +221,6 @@ function checkRoyalFlush(hand)
     return false;
   }
 }
-
-function containsAce(hand)
-{
-  if (cardValuesSorted(hand)[4] == 14) 
-  {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-
 //checks if a hand has both a straight and a flush. 
 function checkStraightFlush(hand) 
 {
@@ -213,7 +231,6 @@ function checkStraightFlush(hand)
     return false;
   }
 }
-
 // checks if the hand is a flush
 function checkFlush(hand) 
 {
@@ -227,8 +244,25 @@ function checkFlush(hand)
   }
   //if the loop does not fail the hand is a flush explicitly returning true. 
   return true;
-}
-
+};
+function checkFullHouse(hand)
+{
+  if (checkThreeKind(hand) && checkPair(hand))
+  {
+    return true;
+  } else {
+    return false;
+  }
+};
+function containsAce(hand)
+{
+  if (cardValuesSorted(hand)[4] == 14) 
+  {
+    return true;
+  } else {
+    return false;
+  }
+};
 function checkStraight(hand) 
 {
   // this formattedArray variable is the faceCard value's converted to Integers and sorted with the lowest number first in an Array.
@@ -240,11 +274,10 @@ function checkStraight(hand)
     {
       return false;
     }
-  }
+  };
   //if the n+1 card less the n card does equal 1 explicitly returns true. Is a straight.
   return true;
 };
-
 function checkFourKind(hand)
 {
   var keyObject = countDuplicates(hand);
@@ -257,10 +290,8 @@ function checkFourKind(hand)
     } else {
       return true;
     }
-  }
+  };
 };
-
-
 function checkThreeKind(hand) 
 {
   var keyObject = countDuplicates(hand);
@@ -276,8 +307,41 @@ function checkThreeKind(hand)
   } else {
     return true;
   }
-
 };
+function checkPair(hand)
+{
+  var keyObject = countDuplicates(hand);
+  var vals =[];
 
+  var vals = Object.keys(keyObject).map(function (key) 
+  {
+    return keyObject[key];
+  })
+  if (vals.indexOf(2) == -1) 
+  {
+    return false;
+  } else {
+    return true;
+  }
+}
+function checkTwoPair(hand) 
+{
+  var keyObject = countDuplicates(hand);
+  var vals =[];
+  var pairIndex;
 
+  var vals = Object.keys(keyObject).map(function (key) 
+  {
+    return keyObject[key];
+  })
+
+  pairIndex = vals.indexOf(2)
+  vals.splice(temp, 1)
+  if (vals.indexOf(2) == -1) 
+  {
+    return false;
+  } else {
+    return true;
+  }
+}
 
