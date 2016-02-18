@@ -10,11 +10,8 @@ $(function ()
   {
     handOne = dealHand(deck);
     handTwo = dealHand(deck);
-    scoreHand(handOne)
-    scoreHand(handTwo)
-    showCards(handOne, '#handOne');
-    showCards(handTwo, '#handTwo');
-    
+    scoreHand(handOne, '#handOne', '#handOne-score')
+    scoreHand(handTwo, '#handTwo', '#handTwo-score')
   });
 });
 
@@ -156,40 +153,52 @@ function showCards(hand, handID)
   cardFive.innerHTML = hand[4].faceValue + hand[4].suit;
 };
 
-function scoreHand(hand) 
+function scoreHand(hand, handID, scoreID) 
 {
   var score = 0;
+  var scoreDisplay = document.querySelector(scoreID);
+  showCards(hand, handID);
 
   if (checkRoyalFlush(hand)) {
     //Ten thousand points
     score = 10000;
+    scoreDisplay.innerHTML = "Royal Flush";
   } else if (checkStraightFlush(hand)) {
     // nine thousand
     score = 9000;
+    scoreDisplay.innerHTML = "Straight Flush";
   } else if (checkFourKind(hand)) {
     // eight thousand
     score = 8000;
+    scoreDisplay.innerHTML = "Four of a Kind";
   } else if (checkFullHouse(hand)) {
     //Seven thousand
     score = 7000;
+    scoreDisplay.innerHTML = "Full House";
   } else if (checkFlush(hand)) {
     //Six thousand
     score = 6000;
+    scoreDisplay.innerHTML = "Flush";
   } else if (checkStraight(hand)) {
     //Five thousand
     score = 5000;
+    scoreDisplay.innerHTML = "Straight";
   } else if (checkThreeKind(hand)) {
     //Four thousand
     score = 4000;
+    scoreDisplay.innerHTML = "Three of a Kind";
   } else if (checkTwoPair(hand)) {
     //Three thousand
     score = 3000;
+    scoreDisplay.innerHTML = "Two Pair";
   } else if (checkPair(hand)) {
     //Two  thousand
     score = 2000;
+    scoreDisplay.innerHTML = "One Pair";
   } else {
     //one point, high card
     score = 1;
+    scoreDisplay.innerHTML = "High Card";
   }
   console.log(score)
   return score;
