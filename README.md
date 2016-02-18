@@ -1,9 +1,9 @@
 # A 5 card poker application. 
 
-- Current active branch is score-hands
+- Current active branch is display-score
 
 - In progress. 
-   - comparing hand scores
+   - comparing higher matching hands. Ex. higher straight, or higher pairs. 
 
 - TO DO. 
    - exchange user chosen cards for new ones during turn.
