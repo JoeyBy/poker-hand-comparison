@@ -24,7 +24,12 @@ var deck = [];
 var handOne = [];
 var handTwo = [];
 
-//Test Hands for determining a flush
+function startgame() 
+{
+  newDeck(cardSuit, cardValue);
+};
+
+//Test Hands
 // var testFlush = [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'H', faceValue: 'Q'}]
 // var testNotFlush =  [ {suit: 'H', faceValue: '2'}, {suit: 'H', faceValue: '5'}, {suit: 'H', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 // var testStraight = [ {suit: 'H', faceValue: 'J'}, {suit: 'H', faceValue: 'K'}, {suit: 'D', faceValue: '10'}, {suit: 'H', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
@@ -35,6 +40,7 @@ var handTwo = [];
 // var testFullHouse = [ {suit: 'H', faceValue: 'K'}, {suit: 'C', faceValue: 'K'}, {suit: 'D', faceValue: 'Q'}, {suit: 'H', faceValue: 'Q'}, {suit: 'C', faceValue: 'Q'}]
 // var testRoyalFlush = [ {suit: 'C', faceValue: '10'}, {suit: 'C', faceValue: 'K'}, {suit: 'C', faceValue: 'J'}, {suit: 'C', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 // var testStraightFlush = [ {suit: 'C', faceValue: '7'}, {suit: 'C', faceValue: '4'}, {suit: 'C', faceValue: '5'}, {suit: 'C', faceValue: '6'}, {suit: 'C', faceValue: '8'}]
+// var testTwoPair = [ {suit: 'C', faceValue: '7'}, {suit: 'H', faceValue: '7'}, {suit: 'C', faceValue: '5'}, {suit: 'H', faceValue: '5'}, {suit: 'D', faceValue: 'K'}]
 
 
 
@@ -69,6 +75,7 @@ function newDeck(cardSuit, cardValue)
     });
   }
 };
+
 // generate a random number, this is the card out of the deck delt.
 function randomNumber(deck) 
 {
@@ -86,12 +93,6 @@ function dealHand(deck)
   //returns an array
   return hand;
 };
-
-function startgame() 
-{
-  newDeck(cardSuit, cardValue);
-};
-
 function sortNumbers(a,b) 
 {
   return a - b;
@@ -159,41 +160,38 @@ function scoreHand(hand)
 {
   var score = 0;
 
-  console.log(checkPair(hand))
-
-  switch (hand) {
-    case checkRoyalFlush(hand):
-      //one million points
-      score = 1000000;
-      break;
-    case checkStraightFlush(hand):
-      // nine hundred thousand
-      score = 900000;
-      break;
-    case checkFourKind(hand):
-      // eight hundred thousand
-      score = 800000;
-      break;
-    case checkFullHouse(hand):
-      //Seven hundred thousand
-      score = 700000;
-      break;
-    case checkFlush(hand):
-      //Six hundred thousand
-      score = 600000;
-      break;
-    case checkStraight(hand):
-      score = 500000;
-      break;
-    case checkThreeKind(hand):
-      score = 400000;
-      break;
-
+  if (checkRoyalFlush(hand)) {
+    //Ten thousand points
+    score = 10000;
+  } else if (checkStraightFlush(hand)) {
+    // nine thousand
+    score = 9000;
+  } else if (checkFourKind(hand)) {
+    // eight thousand
+    score = 8000;
+  } else if (checkFullHouse(hand)) {
+    //Seven thousand
+    score = 7000;
+  } else if (checkFlush(hand)) {
+    //Six thousand
+    score = 6000;
+  } else if (checkStraight(hand)) {
+    //Five thousand
+    score = 5000;
+  } else if (checkThreeKind(hand)) {
+    //Four thousand
+    score = 4000;
+  } else if (checkTwoPair(hand)) {
+    //Three thousand
+    score = 3000;
+  } else if (checkPair(hand)) {
+    //Two  thousand
+    score = 2000;
+  } else {
+    //one point, high card
+    score = 1;
   }
-
-
-
-
+  console.log(score)
   return score;
 }
 
@@ -336,7 +334,8 @@ function checkTwoPair(hand)
   })
 
   pairIndex = vals.indexOf(2)
-  vals.splice(temp, 1)
+  vals.splice(pairIndex, 1)
+
   if (vals.indexOf(2) == -1) 
   {
     return false;
