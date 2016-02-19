@@ -201,7 +201,11 @@ function scoreHand(hand, handID, scoreID)
     scoreDisplay.innerHTML = "High Card";
   }
   console.log(score)
-  return score;
+  console.log(hand)
+  return {
+    score: score,
+    hand: hand
+  }
 }
 
 
