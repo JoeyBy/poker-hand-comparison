@@ -14,7 +14,7 @@ $(function ()
 });
 
 var cardSuit = [ 'S', 'H', 'D', 'C'];
-var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A' ];
+var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' ];
 var deck = [];
 var handOne = [];
 var handTwo = [];
@@ -31,8 +31,16 @@ function playGame() {
   var scoredHandTwo = scoreHand(handTwo, '#handTwo', '#handTwo-score')
 
   if (scoredHandOne.score === scoredHandTwo.score) {
-    //compare higher hands
-    console.log("COMPARE HANDS")
+    
+    //compares higher high cards
+    if ((scoredHandOne.score && scoredHandTwo.score) === 1 ) {
+      console.log("HIGH CARD COMPARISION")
+      higherHighCard(scoredHandOne.hand, scoredHandTwo.hand)
+    } else {
+      console.log("TO COMPARE OTHER HAND")
+    }
+
+
   } else if (scoredHandOne.score > scoredHandTwo.score) {
     //player one wins
     console.log("Player One wins")
@@ -44,8 +52,52 @@ function playGame() {
     console.log("Something went wrong")
   }
 
-  console.log(gameDeck)
 }
+function higherPair(handOne, handTwo) {
+
+}
+
+
+ 
+function higherHighCard(handOne, handTwo) {
+  // compares the highest sorted cards
+
+  if (cardValuesSorted(handOne)[4] > cardValuesSorted(handTwo)[4]) {
+    console.log("Player One Wins");
+  } else if (cardValuesSorted(handTwo)[4] > cardValuesSorted(handOne)[4]) {
+    console.log("Player Two Wins");
+  } else {
+    //if the highest card is the same, compare the second highest
+    if (cardValuesSorted(handOne)[3] > cardValuesSorted(handTwo)[3]) {
+      console.log("PLayer One Wins - second high card");
+    } else if (cardValuesSorted(handTwo)[3] > cardValuesSorted(handOne)[3]) {
+      console.log("Player Two Wins - second high card");
+    } else {
+      //if the highest card is the same, compare the third highest
+      if (cardValuesSorted(handOne)[2] > cardValuesSorted(handTwo)[2]) {
+        console.log("PLayer One Wins - third high card");
+      } else if (cardValuesSorted(handTwo)[2] > cardValuesSorted(handOne)[2]) {
+        console.log("Player Two Wins - third high card");
+      } else {     
+        //if the highest card is the same, compare the fourth highest
+        if (cardValuesSorted(handOne)[1] > cardValuesSorted(handTwo)[1]) {
+          console.log("PLayer One Wins - fourth high card");
+        } else if (cardValuesSorted(handTwo)[1] > cardValuesSorted(handOne)[1]) {
+          console.log("Player Two Wins - fourth high card");
+        } else {
+          //if the highest card is the same, compare the fifth highest
+          if (cardValuesSorted(handOne)[0] > cardValuesSorted(handTwo)[0]) {
+            console.log("PLayer One Wins - fourth high card");
+          } else if (cardValuesSorted(handTwo)[0] > cardValuesSorted(handOne)[0]) {
+            console.log("Player Two Wins - fourth high card");
+          } else {
+            console.log("HOLY SHIT!!!");
+          };
+        };
+      };
+    };
+  }
+};
 
 
 function startgame() 
@@ -136,7 +188,9 @@ function faceCardstoIntegers(cardValueArray)
 {
   var integerArray = cardValueArray.map(function(faceValue) 
   {
-      if (faceValue == "J") {
+      if (faceValue == "T") {
+        return faceValue = 10;
+      } else if (faceValue == "J") {
         return faceValue = 11;
       } else if (faceValue == "Q") {
         return faceValue = 12;
