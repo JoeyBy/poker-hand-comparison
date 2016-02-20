@@ -34,10 +34,11 @@ function playGame() {
     
     //compares higher high cards
     if ((scoredHandOne.score && scoredHandTwo.score) === 1 ) {
-      console.log("HIGH CARD COMPARISION")
       higherHighCard(scoredHandOne.hand, scoredHandTwo.hand)
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 2000 ){
+      higherPair(scoredHandOne.hand, scoredHandTwo.hand)
     } else {
-      console.log("TO COMPARE OTHER HAND")
+      console.log("ERRRR MAHHH GERRRDDDDDD")
     }
 
 
@@ -54,8 +55,26 @@ function playGame() {
 
 }
 function higherPair(handOne, handTwo) {
-
+  if (pairValue(handOne) > pairValue(handTwo)) {
+    console.log("Player One Wins!");
+  } else if (pairValue(handTwo) > pairValue(handOne)) {
+    console.log("Player Two Wins!");
+  } 
 }
+
+function pairValue(hand) {
+  return countDuplicates(hand).getKey(2);
+}
+
+//Taken from Benny Neugebauer on Stack overflow (http://stackoverflow.com/questions/9907419/javascript-object-get-key-by-value)
+Object.prototype.getKey = function(value){
+  for(var key in this){
+    if(this[key] == value){
+      return key;
+    }
+  }
+  return null;
+};
 
 
  
@@ -208,6 +227,10 @@ function faceCardstoIntegers(cardValueArray)
 function cardValuesSorted(hand)
 {
   return faceCardstoIntegers(extractCardValues(hand)).sort(sortNumbers)
+}
+function pairValues(sortedArray)
+{
+
 }
 
 function countDuplicates(hand)
@@ -402,12 +425,8 @@ function checkThreeKind(hand)
 function checkPair(hand)
 {
   var keyObject = countDuplicates(hand);
-  var vals =[];
+  var vals = countKeys(keyObject)
 
-  var vals = Object.keys(keyObject).map(function (key) 
-  {
-    return keyObject[key];
-  })
   if (vals.indexOf(2) == -1) 
   {
     return false;
@@ -415,16 +434,20 @@ function checkPair(hand)
     return true;
   }
 }
-function checkTwoPair(hand) 
-{
-  var keyObject = countDuplicates(hand);
-  var vals =[];
-  var pairIndex;
-
+function countKeys(keyObject) {
   var vals = Object.keys(keyObject).map(function (key) 
   {
     return keyObject[key];
   })
+  
+  return vals;
+}
+
+function checkTwoPair(hand) 
+{
+  var keyObject = countDuplicates(hand);
+  var pairIndex;
+  var vals = countKeys(keyObject)
 
   pairIndex = vals.indexOf(2)
   vals.splice(pairIndex, 1)
