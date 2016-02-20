@@ -5,13 +5,11 @@ $(function ()
     startgame();
     dealCard(deck);
     $('#dealCards').css({'display':'inline-block' })
+    $('#startDeal').css({'display':'none' })
   });
   $('#dealCards').on('click', function() 
   {
-    handOne = dealHand(deck);
-    handTwo = dealHand(deck);
-    scoreHand(handOne, '#handOne', '#handOne-score')
-    scoreHand(handTwo, '#handTwo', '#handTwo-score')
+    playGame();
   });
 });
 
@@ -20,6 +18,35 @@ var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', '
 var deck = [];
 var handOne = [];
 var handTwo = [];
+
+
+function playGame() {
+  startgame()
+  var gameDeck = deck;
+
+  handOne = dealHand(gameDeck);
+  handTwo = dealHand(gameDeck);
+  
+  var scoredHandOne = scoreHand(handOne, '#handOne', '#handOne-score')
+  var scoredHandTwo = scoreHand(handTwo, '#handTwo', '#handTwo-score')
+
+  if (scoredHandOne.score === scoredHandTwo.score) {
+    //compare higher hands
+    console.log("COMPARE HANDS")
+  } else if (scoredHandOne.score > scoredHandTwo.score) {
+    //player one wins
+    console.log("Player One wins")
+  } else if (scoredHandTwo.score > scoredHandOne.score) {
+    //player two wins!
+    console.log("Player two wins")
+  } else {
+    //something didn't work properly.
+    console.log("Something went wrong")
+  }
+
+  console.log(gameDeck)
+}
+
 
 function startgame() 
 {
@@ -200,8 +227,7 @@ function scoreHand(hand, handID, scoreID)
     score = 1;
     scoreDisplay.innerHTML = "High Card";
   }
-  console.log(score)
-  console.log(hand)
+
   return {
     score: score,
     hand: hand
