@@ -30,17 +30,26 @@ function playGame() {
   var scoredHandOne = scoreHand(handOne, '#handOne', '#handOne-score')
   var scoredHandTwo = scoreHand(handTwo, '#handTwo', '#handTwo-score')
 
+  //Compares Scored hands
+
+  //If they are the same hand, which means they have the same score
   if (scoredHandOne.score === scoredHandTwo.score) {
     
     //compares higher high cards
     if ((scoredHandOne.score && scoredHandTwo.score) === 1 ) {
-      higherHighCard(scoredHandOne.hand, scoredHandTwo.hand)
-    } else if ((scoredHandOne.score && scoredHandTwo.score) === 2000 ){
-      higherPair(scoredHandOne.hand, scoredHandTwo.hand)
+      higherHighCard(scoredHandOne.hand, scoredHandTwo.hand);
+
+    //compares higher one pair hands
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 2000 ) {
+      higherPair(scoredHandOne.hand, scoredHandTwo.hand);
+
+    //compares higher two pair hands
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 3000) {
+      higherTwoPair(scoredHandOne.hand, scoredHandTwo.hand);
+
     } else {
       console.log("ERRRR MAHHH GERRRDDDDDD")
     }
-
 
   } else if (scoredHandOne.score > scoredHandTwo.score) {
     //player one wins
@@ -52,9 +61,29 @@ function playGame() {
     //something didn't work properly.
     console.log("Something went wrong")
   }
-
 }
-function higherPair(handOne, handTwo) {
+
+function higherTwoPair(handOne, handTwo) 
+{
+  if (TwoPairCardValues(handOne)[1] > TwoPairCardValues(handTwo)[1]) {
+    console.log("Player One Wins!");
+  } else if (TwoPairCardValues(handTwo)[1] > TwoPairCardValues(handOne)[1]) {
+    console.log("Player Two Wins!");
+  } else {
+
+    if (TwoPairCardValues(handOne)[0] > TwoPairCardValues(handTwo)[0]) {
+      console.log("Player One Wins!");
+    } else if (TwoPairCardValues(handTwo)[0] > TwoPairCardValues(handOne)[0]) {
+      console.log("Player Two Wins!");
+    }
+    else {
+      console.log("Woah, crazy man. Should compare high cards here")
+    }
+  }
+}
+
+function higherPair(handOne, handTwo) 
+{
   if (pairValue(handOne) > pairValue(handTwo)) {
     console.log("Player One Wins!");
   } else if (pairValue(handTwo) > pairValue(handOne)) {
@@ -62,8 +91,31 @@ function higherPair(handOne, handTwo) {
   } 
 }
 
-function pairValue(hand) {
+function pairValue(hand) 
+{
   return countDuplicates(hand).getKey(2);
+}
+
+function TwoPairCardValues(hand)
+{
+  var pairValues = getMultipleKeys(countDuplicates(hand))
+
+  //retrun a sorted array, lowest to highest of the faceCard values
+  return pairValues.sort(sortNumbers)
+}
+
+//takes in object of key-value pairs. 
+function getMultipleKeys(object) 
+{
+  var pairs = [];
+  for (var prop in object) {
+    //loops through the object and if their key is 2 their property is pushed to the new array. 
+    if (object[prop] == 2) {
+      pairs.push(parseInt(prop))
+    };
+  }
+  //this returns a numeric array of the card facevalues 
+  return pairs;
 }
 
 //Taken from Benny Neugebauer on Stack overflow (http://stackoverflow.com/questions/9907419/javascript-object-get-key-by-value)
@@ -75,8 +127,6 @@ Object.prototype.getKey = function(value){
   }
   return null;
 };
-
-
  
 function higherHighCard(handOne, handTwo) {
   // compares the highest sorted cards
@@ -136,6 +186,7 @@ function startgame()
 // var testRoyalFlush = [ {suit: 'C', faceValue: '10'}, {suit: 'C', faceValue: 'K'}, {suit: 'C', faceValue: 'J'}, {suit: 'C', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 // var testStraightFlush = [ {suit: 'C', faceValue: '7'}, {suit: 'C', faceValue: '4'}, {suit: 'C', faceValue: '5'}, {suit: 'C', faceValue: '6'}, {suit: 'C', faceValue: '8'}]
 // var testTwoPair = [ {suit: 'C', faceValue: '7'}, {suit: 'H', faceValue: '7'}, {suit: 'C', faceValue: '5'}, {suit: 'H', faceValue: '5'}, {suit: 'D', faceValue: 'K'}]
+// var testOtherTwoPair = [ {suit: 'C', faceValue: 'K'}, {suit: 'H', faceValue: 'K'}, {suit: 'C', faceValue: '3'}, {suit: 'H', faceValue: '3'}, {suit: 'D', faceValue: '8'}]
 
 
 
@@ -227,10 +278,6 @@ function faceCardstoIntegers(cardValueArray)
 function cardValuesSorted(hand)
 {
   return faceCardstoIntegers(extractCardValues(hand)).sort(sortNumbers)
-}
-function pairValues(sortedArray)
-{
-
 }
 
 function countDuplicates(hand)
