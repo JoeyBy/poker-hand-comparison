@@ -47,6 +47,10 @@ function playGame() {
     } else if ((scoredHandOne.score && scoredHandTwo.score) === 3000) {
       higherTwoPair(scoredHandOne.hand, scoredHandTwo.hand);
 
+    //compares higher three of a kind hands
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 4000) {
+      higherThreeKind(scoredHandOne.hand, scoredHandTwo.hand);
+
     } else {
       console.log("ERRRR MAHHH GERRRDDDDDD")
     }
@@ -61,6 +65,15 @@ function playGame() {
     //something didn't work properly.
     console.log("Something went wrong")
   }
+}
+
+function higherThreeKind(handOne, handTwo)
+{
+  if (tripleValue(handOne) > tripleValue(handTwo)) {
+    console.log("Player One Wins!");
+  } else if (tripleValue(handTwo) > tripleValue(handOne)) {
+    console.log("Player Two Wins!");
+  } 
 }
 
 function higherTwoPair(handOne, handTwo) 
@@ -89,6 +102,10 @@ function higherPair(handOne, handTwo)
   } else if (pairValue(handTwo) > pairValue(handOne)) {
     console.log("Player Two Wins!");
   } 
+}
+
+function tripleValue(hand) {
+  return countDuplicates(hand).getKey(3);
 }
 
 function pairValue(hand) 
