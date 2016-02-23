@@ -50,6 +50,26 @@ function playGame() {
     //compares higher three of a kind hands
     } else if ((scoredHandOne.score && scoredHandTwo.score) === 4000) {
       higherThreeKind(scoredHandOne.hand, scoredHandTwo.hand);
+    
+    //compares higher staights
+    } else if((scoredHandOne.score && scoredHandTwo.score) === 5000) {
+      higherStraight(scoredHandOne.hand, scoredHandTwo.hand);
+
+    // flush's are determined by their high card.
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 6000) {
+      higherHighCard(scoreHandOne.hand, scoredHandTwo.hand);
+    
+    //full house's are determined by the higher 3 of a kind. 
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 7000) {
+      higherThreeKind(scoredHandOne.hand, scoredHandTwo.hand);
+
+      // Higher four of a kind.
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 8000){
+      higherFourOfKind(scoreHandOne.hand, scoredHandTwo.hand);
+
+      //higher straight wins in a straight flush.
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 9000) {
+      higherStraight(scoredHandOne.hand, scoredHandTwo.hand);
 
     } else {
       console.log("ERRRR MAHHH GERRRDDDDDD")
@@ -64,6 +84,26 @@ function playGame() {
   } else {
     //something didn't work properly.
     console.log("Something went wrong")
+  }
+}
+function higherFourOfKind(handOne, handTwo)
+{
+  if (fourKindValue(handOne) > fourKindValue(handTwo)){
+    console.log("Player One Wins")
+  } else {
+    // if hand one is not higher than hand two, hand two must be the winner.
+    console.log("Player Two Wins")
+  }
+}
+
+
+
+function higherStraight(handOne, handTwo)
+{
+  if (cardValuesSorted(handOne)[4] > cardValuesSorted(handTwo)[4]) {
+    console.log("Player One Wins")
+  } else if (cardValuesSorted(handOne)[4] > cardValuesSorted(handTwo)[4]) {
+    console.log("Player Two Wins")
   }
 }
 
@@ -97,14 +137,23 @@ function higherTwoPair(handOne, handTwo)
 
 function higherPair(handOne, handTwo) 
 {
-  if (pairValue(handOne) > pairValue(handTwo)) {
+  var pairScoreOne = parseInt(pairValue(handOne))
+  var pairScoreTwo = parseInt(pairValue(handTwo))
+
+  if (pairScoreOne > pairScoreTwo) {
     console.log("Player One Wins!");
-  } else if (pairValue(handTwo) > pairValue(handOne)) {
+  } else if (pairScoreTwo > pairScoreOne) {
     console.log("Player Two Wins!");
   } 
 }
 
-function tripleValue(hand) {
+function fourKindValue(hand)
+{
+  return countDuplicates(hand).getKey(4);
+}
+
+function tripleValue(hand) 
+{
   return countDuplicates(hand).getKey(3);
 }
 
