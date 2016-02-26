@@ -4,13 +4,14 @@
   "description": "a 5 card poker app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "watchify -o js/bundle.js -v -d .",
+    "build": "browserify . | uglifyjs -cm > js/bundle.min.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/JoeyBy/poker-hand-comparison.git"
   },
-  "author": "",
+  "author": "Joey Byrne",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/JoeyBy/poker-hand-comparison/issues"
@@ -18,6 +19,20 @@
   "homepage": "https://github.com/JoeyBy/poker-hand-comparison",
   "dependencies": {
     "express": "^4.13.4",
-    "react": "^0.14.7"
+    "flux": "^2.1.1",
+    "react": "^0.14.7",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "browserify": "~6.2.0",
+    "envify": "~3.0.0",
+    "reactify": "^0.15",
+    "watchify": "~2.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
   }
 }
