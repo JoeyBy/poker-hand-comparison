@@ -19,7 +19,6 @@ var deck = [];
 var handOne = [];
 var handTwo = [];
 
-
 function playGame() {
   startgame()
   var gameDeck = deck;
