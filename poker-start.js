@@ -5,24 +5,235 @@ $(function ()
     startgame();
     dealCard(deck);
     $('#dealCards').css({'display':'inline-block' })
+    $('#startDeal').css({'display':'none' })
   });
   $('#dealCards').on('click', function() 
   {
-    handOne = dealHand(deck);
-    handTwo = dealHand(deck);
-    scoreHand(handOne)
-    scoreHand(handTwo)
-    showCards(handOne, '#handOne');
-    showCards(handTwo, '#handTwo');
-    
+    playGame();
   });
 });
 
 var cardSuit = [ 'S', 'H', 'D', 'C'];
-var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A' ];
+var cardValue = [ '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' ];
 var deck = [];
 var handOne = [];
 var handTwo = [];
+
+
+function playGame() {
+  startgame()
+  var gameDeck = deck;
+
+  handOne = dealHand(gameDeck);
+  handTwo = dealHand(gameDeck);
+  
+  var scoredHandOne = scoreHand(handOne, '#handOne', '#handOne-score')
+  var scoredHandTwo = scoreHand(handTwo, '#handTwo', '#handTwo-score')
+
+  //Compares Scored hands
+
+  //If they are the same hand, which means they have the same score
+  if (scoredHandOne.score === scoredHandTwo.score) {
+    
+    //compares higher high cards
+    if ((scoredHandOne.score && scoredHandTwo.score) === 1 ) {
+      higherHighCard(scoredHandOne.hand, scoredHandTwo.hand);
+
+    //compares higher one pair hands
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 2000 ) {
+      higherPair(scoredHandOne.hand, scoredHandTwo.hand);
+
+    //compares higher two pair hands
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 3000) {
+      higherTwoPair(scoredHandOne.hand, scoredHandTwo.hand);
+
+    //compares higher three of a kind hands
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 4000) {
+      higherThreeKind(scoredHandOne.hand, scoredHandTwo.hand);
+    
+    //compares higher staights
+    } else if((scoredHandOne.score && scoredHandTwo.score) === 5000) {
+      higherStraight(scoredHandOne.hand, scoredHandTwo.hand);
+
+    // flush's are determined by their high card.
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 6000) {
+      higherHighCard(scoreHandOne.hand, scoredHandTwo.hand);
+    
+    //full house's are determined by the higher 3 of a kind. 
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 7000) {
+      higherThreeKind(scoredHandOne.hand, scoredHandTwo.hand);
+
+      // Higher four of a kind.
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 8000){
+      higherFourOfKind(scoreHandOne.hand, scoredHandTwo.hand);
+
+      //higher straight wins in a straight flush.
+    } else if ((scoredHandOne.score && scoredHandTwo.score) === 9000) {
+      higherStraight(scoredHandOne.hand, scoredHandTwo.hand);
+
+    } else {
+      console.log("ERRRR MAHHH GERRRDDDDDD")
+    }
+
+  } else if (scoredHandOne.score > scoredHandTwo.score) {
+    //player one wins
+    console.log("Player One wins")
+  } else if (scoredHandTwo.score > scoredHandOne.score) {
+    //player two wins!
+    console.log("Player two wins")
+  } else {
+    //something didn't work properly.
+    console.log("Something went wrong")
+  }
+}
+function higherFourOfKind(handOne, handTwo)
+{
+  if (fourKindValue(handOne) > fourKindValue(handTwo)){
+    console.log("Player One Wins")
+  } else {
+    // if hand one is not higher than hand two, hand two must be the winner.
+    console.log("Player Two Wins")
+  }
+}
+
+
+
+function higherStraight(handOne, handTwo)
+{
+  if (cardValuesSorted(handOne)[4] > cardValuesSorted(handTwo)[4]) {
+    console.log("Player One Wins")
+  } else if (cardValuesSorted(handOne)[4] > cardValuesSorted(handTwo)[4]) {
+    console.log("Player Two Wins")
+  }
+}
+
+function higherThreeKind(handOne, handTwo)
+{
+  if (tripleValue(handOne) > tripleValue(handTwo)) {
+    console.log("Player One Wins!");
+  } else if (tripleValue(handTwo) > tripleValue(handOne)) {
+    console.log("Player Two Wins!");
+  } 
+}
+
+function higherTwoPair(handOne, handTwo) 
+{
+  if (TwoPairCardValues(handOne)[1] > TwoPairCardValues(handTwo)[1]) {
+    console.log("Player One Wins!");
+  } else if (TwoPairCardValues(handTwo)[1] > TwoPairCardValues(handOne)[1]) {
+    console.log("Player Two Wins!");
+  } else {
+
+    if (TwoPairCardValues(handOne)[0] > TwoPairCardValues(handTwo)[0]) {
+      console.log("Player One Wins!");
+    } else if (TwoPairCardValues(handTwo)[0] > TwoPairCardValues(handOne)[0]) {
+      console.log("Player Two Wins!");
+    }
+    else {
+      console.log("Woah, crazy man. Should compare high cards here")
+    }
+  }
+}
+
+function higherPair(handOne, handTwo) 
+{
+  var pairScoreOne = parseInt(pairValue(handOne))
+  var pairScoreTwo = parseInt(pairValue(handTwo))
+
+  if (pairScoreOne > pairScoreTwo) {
+    console.log("Player One Wins!");
+  } else if (pairScoreTwo > pairScoreOne) {
+    console.log("Player Two Wins!");
+  } 
+}
+
+function fourKindValue(hand)
+{
+  return countDuplicates(hand).getKey(4);
+}
+
+function tripleValue(hand) 
+{
+  return countDuplicates(hand).getKey(3);
+}
+
+function pairValue(hand) 
+{
+  return countDuplicates(hand).getKey(2);
+}
+
+function TwoPairCardValues(hand)
+{
+  var pairValues = getMultipleKeys(countDuplicates(hand))
+
+  //retrun a sorted array, lowest to highest of the faceCard values
+  return pairValues.sort(sortNumbers)
+}
+
+//takes in object of key-value pairs. 
+function getMultipleKeys(object) 
+{
+  var pairs = [];
+  for (var prop in object) {
+    //loops through the object and if their key is 2 their property is pushed to the new array. 
+    if (object[prop] == 2) {
+      pairs.push(parseInt(prop))
+    };
+  }
+  //this returns a numeric array of the card facevalues 
+  return pairs;
+}
+
+//Taken from Benny Neugebauer on Stack overflow (http://stackoverflow.com/questions/9907419/javascript-object-get-key-by-value)
+Object.prototype.getKey = function(value){
+  for(var key in this){
+    if(this[key] == value){
+      return key;
+    }
+  }
+  return null;
+};
+ 
+function higherHighCard(handOne, handTwo) {
+  // compares the highest sorted cards
+
+  if (cardValuesSorted(handOne)[4] > cardValuesSorted(handTwo)[4]) {
+    console.log("Player One Wins");
+  } else if (cardValuesSorted(handTwo)[4] > cardValuesSorted(handOne)[4]) {
+    console.log("Player Two Wins");
+  } else {
+    //if the highest card is the same, compare the second highest
+    if (cardValuesSorted(handOne)[3] > cardValuesSorted(handTwo)[3]) {
+      console.log("PLayer One Wins - second high card");
+    } else if (cardValuesSorted(handTwo)[3] > cardValuesSorted(handOne)[3]) {
+      console.log("Player Two Wins - second high card");
+    } else {
+      //if the highest card is the same, compare the third highest
+      if (cardValuesSorted(handOne)[2] > cardValuesSorted(handTwo)[2]) {
+        console.log("PLayer One Wins - third high card");
+      } else if (cardValuesSorted(handTwo)[2] > cardValuesSorted(handOne)[2]) {
+        console.log("Player Two Wins - third high card");
+      } else {     
+        //if the highest card is the same, compare the fourth highest
+        if (cardValuesSorted(handOne)[1] > cardValuesSorted(handTwo)[1]) {
+          console.log("PLayer One Wins - fourth high card");
+        } else if (cardValuesSorted(handTwo)[1] > cardValuesSorted(handOne)[1]) {
+          console.log("Player Two Wins - fourth high card");
+        } else {
+          //if the highest card is the same, compare the fifth highest
+          if (cardValuesSorted(handOne)[0] > cardValuesSorted(handTwo)[0]) {
+            console.log("PLayer One Wins - fourth high card");
+          } else if (cardValuesSorted(handTwo)[0] > cardValuesSorted(handOne)[0]) {
+            console.log("Player Two Wins - fourth high card");
+          } else {
+            console.log("HOLY SHIT!!!");
+          };
+        };
+      };
+    };
+  }
+};
+
 
 function startgame() 
 {
@@ -41,6 +252,7 @@ function startgame()
 // var testRoyalFlush = [ {suit: 'C', faceValue: '10'}, {suit: 'C', faceValue: 'K'}, {suit: 'C', faceValue: 'J'}, {suit: 'C', faceValue: 'A'}, {suit: 'C', faceValue: 'Q'}]
 // var testStraightFlush = [ {suit: 'C', faceValue: '7'}, {suit: 'C', faceValue: '4'}, {suit: 'C', faceValue: '5'}, {suit: 'C', faceValue: '6'}, {suit: 'C', faceValue: '8'}]
 // var testTwoPair = [ {suit: 'C', faceValue: '7'}, {suit: 'H', faceValue: '7'}, {suit: 'C', faceValue: '5'}, {suit: 'H', faceValue: '5'}, {suit: 'D', faceValue: 'K'}]
+// var testOtherTwoPair = [ {suit: 'C', faceValue: 'K'}, {suit: 'H', faceValue: 'K'}, {suit: 'C', faceValue: '3'}, {suit: 'H', faceValue: '3'}, {suit: 'D', faceValue: '8'}]
 
 
 
@@ -112,7 +324,9 @@ function faceCardstoIntegers(cardValueArray)
 {
   var integerArray = cardValueArray.map(function(faceValue) 
   {
-      if (faceValue == "J") {
+      if (faceValue == "T") {
+        return faceValue = 10;
+      } else if (faceValue == "J") {
         return faceValue = 11;
       } else if (faceValue == "Q") {
         return faceValue = 12;
@@ -156,43 +370,58 @@ function showCards(hand, handID)
   cardFive.innerHTML = hand[4].faceValue + hand[4].suit;
 };
 
-function scoreHand(hand) 
+function scoreHand(hand, handID, scoreID) 
 {
   var score = 0;
+  var scoreDisplay = document.querySelector(scoreID);
+  showCards(hand, handID);
 
   if (checkRoyalFlush(hand)) {
     //Ten thousand points
     score = 10000;
+    scoreDisplay.innerHTML = "Royal Flush";
   } else if (checkStraightFlush(hand)) {
     // nine thousand
     score = 9000;
+    scoreDisplay.innerHTML = "Straight Flush";
   } else if (checkFourKind(hand)) {
     // eight thousand
     score = 8000;
+    scoreDisplay.innerHTML = "Four of a Kind";
   } else if (checkFullHouse(hand)) {
     //Seven thousand
     score = 7000;
+    scoreDisplay.innerHTML = "Full House";
   } else if (checkFlush(hand)) {
     //Six thousand
     score = 6000;
+    scoreDisplay.innerHTML = "Flush";
   } else if (checkStraight(hand)) {
     //Five thousand
     score = 5000;
+    scoreDisplay.innerHTML = "Straight";
   } else if (checkThreeKind(hand)) {
     //Four thousand
     score = 4000;
+    scoreDisplay.innerHTML = "Three of a Kind";
   } else if (checkTwoPair(hand)) {
     //Three thousand
     score = 3000;
+    scoreDisplay.innerHTML = "Two Pair";
   } else if (checkPair(hand)) {
     //Two  thousand
     score = 2000;
+    scoreDisplay.innerHTML = "One Pair";
   } else {
     //one point, high card
     score = 1;
+    scoreDisplay.innerHTML = "High Card";
   }
-  console.log(score)
-  return score;
+
+  return {
+    score: score,
+    hand: hand
+  }
 }
 
 
@@ -309,12 +538,8 @@ function checkThreeKind(hand)
 function checkPair(hand)
 {
   var keyObject = countDuplicates(hand);
-  var vals =[];
+  var vals = countKeys(keyObject)
 
-  var vals = Object.keys(keyObject).map(function (key) 
-  {
-    return keyObject[key];
-  })
   if (vals.indexOf(2) == -1) 
   {
     return false;
@@ -322,16 +547,20 @@ function checkPair(hand)
     return true;
   }
 }
-function checkTwoPair(hand) 
-{
-  var keyObject = countDuplicates(hand);
-  var vals =[];
-  var pairIndex;
-
+function countKeys(keyObject) {
   var vals = Object.keys(keyObject).map(function (key) 
   {
     return keyObject[key];
   })
+  
+  return vals;
+}
+
+function checkTwoPair(hand) 
+{
+  var keyObject = countDuplicates(hand);
+  var pairIndex;
+  var vals = countKeys(keyObject)
 
   pairIndex = vals.indexOf(2)
   vals.splice(pairIndex, 1)
