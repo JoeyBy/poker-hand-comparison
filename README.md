@@ -1,6 +1,6 @@
 # A 5 card poker application. 
 
-- Current active branch is display-score
+- Current active branch is nodeReact
 
 - In progress. 
    - comparing higher matching hands. Ex. higher straight, or higher pairs. 
